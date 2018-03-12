@@ -1,0 +1,179 @@
+fileFormatVersion: 2
+guid: bed4faebda48d7e448b1139b889d2316
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Head_F
+    21300002: Head_B
+    21300004: UpperArm_R
+    21300006: Torso_F
+    21300008: UpperArm_L
+    21300010: Torso_B
+    21300012: LowerArm_R
+    21300014: LowerArm_L
+    21300016: Leg_R_F
+    21300018: Leg_L_F
+    21300020: Leg_L_B
+    21300022: Leg_R_B
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Head_F
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 1551
+        width: 769
+        height: 810
+      alignment: 9
+      pivot: {x: .541180968, y: .148131117}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Head_B
+      rect:
+        serializedVersion: 2
+        x: 814
+        y: 1554
+        width: 769
+        height: 810
+      alignment: 9
+      pivot: {x: .508236349, y: .159860119}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UpperArm_R
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 906
+        width: 142
+        height: 103
+      alignment: 9
+      pivot: {x: .920000017, y: .860000014}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Torso_F
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 787
+        width: 293
+        height: 334
+      alignment: 9
+      pivot: {x: .575658202, y: .187110946}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UpperArm_L
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 954
+        width: 143
+        height: 104
+      alignment: 9
+      pivot: {x: .0399999991, y: .870000005}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Torso_B
+      rect:
+        serializedVersion: 2
+        x: 1245
+        y: 1007
+        width: 293
+        height: 334
+      alignment: 9
+      pivot: {x: .456767112, y: .234518275}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LowerArm_R
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 707
+        width: 186
+        height: 180
+      alignment: 9
+      pivot: {x: .949999988, y: .910000026}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LowerArm_L
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 642
+        width: 184
+        height: 179
+      alignment: 9
+      pivot: {x: .0399999991, y: .920000017}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Leg_R_F
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 468
+        width: 194
+        height: 154
+      alignment: 9
+      pivot: {x: .449999988, y: .889999986}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Leg_L_F
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 468
+        width: 174
+        height: 149
+      alignment: 9
+      pivot: {x: .469999999, y: .870000005}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Leg_L_B
+      rect:
+        serializedVersion: 2
+        x: 1017
+        y: 485
+        width: 177
+        height: 147
+      alignment: 9
+      pivot: {x: .530398965, y: .908493757}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Leg_R_B
+      rect:
+        serializedVersion: 2
+        x: 1245
+        y: 485
+        width: 196
+        height: 152
+      alignment: 9
+      pivot: {x: .559480011, y: .942483187}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 

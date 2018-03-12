@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Fader
+  - Screen0
+  - RBM
+  - VideoPlayer
+  - GameManager
+  - Head
+  - Torso
+  - LeftLeg
+  - RightLeg
+  - LeftUpperArm
+  - LeftLowerArm
+  - RightUpperArm
+  - RightLowerArm
+  - Manager
+  - Boy
+  - Kenney
+  - SpriteManager
+  - Kinect
+  - StatusText
+  - Man
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - FemaleCharacter
+  - CuteDisconnected
+  - CuteV2
+  - Boy
+  - Player
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

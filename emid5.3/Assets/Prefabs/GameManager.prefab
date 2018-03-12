@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &101786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 405790}
+  - 114: {fileID: 11462378}
+  - 114: {fileID: 11425162}
+  - 114: {fileID: 11488394}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: GameManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &405790
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 101786}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11425162
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 101786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1af08926c7e0c34192ca37d5e117fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coordinateXmlFile: calibration.xml
+  coordinateSchema: {fileID: 0}
+  loadFromXML: 1
+  yawOffset: 0
+  applyToRootCoordinates: 1
+  switchToAvailableDevice: 1
+  setKinectOriginToFloor: 0
+  positionOffset: {x: 0, y: 0, z: 0}
+  rootDevice: 1
+--- !u!114 &11462378
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 101786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41172da20bf660c49930edcaa5c3bafb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgTexture:
+  - {fileID: 2800000, guid: de3e626472ea2544bb512beab2b743d4, type: 3}
+  - {fileID: 2800000, guid: f22ab73eb68221c4b89e2965f15b3069, type: 3}
+  dd:
+    BIGList: []
+    numberOfTabs: 16
+    dimeFile: 
+    dimeFolder: 
+    s1: 
+    s2: 
+    storyTitle: 
+  KenneyArray: 
+  typeOfTransform: 0
+--- !u!114 &11488394
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 101786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc8f20f27ab81542b70f1880fbad4f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xmlSchema: {fileID: 4900000, guid: 5b8ff81402e6b4a48b1d0f9590e514c9, type: 3}
+  filename: inputConfig.xml
+  loadFromTextFileInEditor: 1
+  enablePSMove: 1
+  PSMoveIP: 127.0.0.1
+  PSMovePort: 7899
+  connectToPSMoveOnStartup: 1
+  psMoveWrapper: {fileID: 0}
+  amountOfPSMoveControllers: 4
+  enableMoveCalibrationDuringPlay: 0
+  delayedWandActivation: 0
+  delayTime: 5
+  moveWand0: 0
+  moveWand1: 0
+  moveWand2: 0
+  moveWand3: 0
+  enableKinect: 0
+  maxNumberOfKinectPlayers: 2
+  kinectFloorDetection: 1
+  kinectDriftCorrectionPreferred: 0
+  enableKinect2: 1
+  kinect2FloorDetection: 1
+  enableRazerHydra: 0
+  enableOptitrack: 0
+  OptitrackIP: 127.0.0.1
+  OptitrackPort: 7899
+  moveControllers: []
+  jumpGestureEnabled: 0
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 101786}
+  m_IsPrefabParent: 1

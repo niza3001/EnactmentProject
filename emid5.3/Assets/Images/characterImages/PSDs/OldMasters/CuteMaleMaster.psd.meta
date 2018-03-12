@@ -1,0 +1,289 @@
+fileFormatVersion: 2
+guid: 76694e82d12b90e4ab212beb0170946d
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: CuteMaleMaster_0
+    21300002: CuteMaleMaster_1
+    21300004: CuteMaleMaster_2
+    21300006: CuteMaleMaster_3
+    21300008: CuteMaleMaster_4
+    21300010: CuteMaleMaster_5
+    21300012: CuteMaleMaster_6
+    21300014: UpperArmR
+    21300016: CuteMaleMaster_8
+    21300018: UpperArmL
+    21300020: CuteMaleMaster_10
+    21300022: CuteMaleMaster_11
+    21300024: CuteMaleMaster_12
+    21300026: LowerArmR
+    21300028: CuteMaleMaster_14
+    21300030: LowerArmL
+    21300032: CuteMaleMaster_16
+    21300034: CuteMaleMaster_17
+    21300036: CuteMaleMaster_18
+    21300038: CuteMaleMaster_19
+    21300040: CuteMaleMaster_20
+    21300042: HeadF
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: CuteMaleMaster_0
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 1170
+        width: 580
+        height: 735
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CuteMaleMaster_1
+      rect:
+        serializedVersion: 2
+        x: 1283
+        y: 1217
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CuteMaleMaster_2
+      rect:
+        serializedVersion: 2
+        x: 3192
+        y: 1166
+        width: 565
+        height: 732
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CuteMaleMaster_3
+      rect:
+        serializedVersion: 2
+        x: 1294
+        y: 1202
+        width: 18
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CuteMaleMaster_4
+      rect:
+        serializedVersion: 2
+        x: 2326
+        y: 1205
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CuteMaleMaster_5
+      rect:
+        serializedVersion: 2
+        x: 2332
+        y: 1186
+        width: 21
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CuteMaleMaster_6
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 691
+        width: 275
+        height: 421
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UpperArmR
+      rect:
+        serializedVersion: 2
+        x: 1116
+        y: 923
+        width: 147
+        height: 104
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CuteMaleMaster_8
+      rect:
+        serializedVersion: 2
+        x: 1328
+        y: 749
+        width: 337
+        height: 386
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UpperArmL
+      rect:
+        serializedVersion: 2
+        x: 1707
+        y: 969
+        width: 143
+        height: 105
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CuteMaleMaster_10
+      rect:
+        serializedVersion: 2
+        x: 2411
+        y: 733
+        width: 321
+        height: 387
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CuteMaleMaster_11
+      rect:
+        serializedVersion: 2
+        x: 3324
+        y: 691
+        width: 267
+        height: 421
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CuteMaleMaster_12
+      rect:
+        serializedVersion: 2
+        x: 1286
+        y: 919
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LowerArmR
+      rect:
+        serializedVersion: 2
+        x: 1081
+        y: 725
+        width: 185
+        height: 178
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CuteMaleMaster_14
+      rect:
+        serializedVersion: 2
+        x: 1707
+        y: 853
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LowerArmL
+      rect:
+        serializedVersion: 2
+        x: 1738
+        y: 656
+        width: 186
+        height: 182
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CuteMaleMaster_16
+      rect:
+        serializedVersion: 2
+        x: 1270
+        y: 385
+        width: 85
+        height: 155
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CuteMaleMaster_17
+      rect:
+        serializedVersion: 2
+        x: 1359
+        y: 381
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CuteMaleMaster_18
+      rect:
+        serializedVersion: 2
+        x: 1495
+        y: 382
+        width: 104
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CuteMaleMaster_19
+      rect:
+        serializedVersion: 2
+        x: 1270
+        y: 207
+        width: 194
+        height: 155
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: CuteMaleMaster_20
+      rect:
+        serializedVersion: 2
+        x: 1514
+        y: 188
+        width: 178
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: HeadF
+      rect:
+        serializedVersion: 2
+        x: 1007
+        y: 1160
+        width: 998
+        height: 732
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 

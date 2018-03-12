@@ -1,0 +1,225 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 114: {fileID: 11400008}
+  - 114: {fileID: 11400004}
+  - 114: {fileID: 11400002}
+  - 114: {fileID: 11400000}
+  - 114: {fileID: 11444746}
+  - 114: {fileID: 11444744}
+  - 114: {fileID: 11492966}
+  m_Layer: 5
+  m_Name: VideoPlaylist
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -4.37113883e-08}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 782a63ed2c371794fa17db381425d391, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skin: {fileID: 11400000, guid: 41baf43ebef89204cadf52b9819b1bd2, type: 2}
+  _demo: {fileID: 0}
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e97ef6d0bfd7238498bb990e58ae4ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shaderBGRA32: {fileID: 4800000, guid: 54153bfcee26a5a41a36a1f8df5c57f0, type: 3}
+  _shaderYUY2: {fileID: 4800000, guid: 6f8163253615321489fa569080dfe952, type: 3}
+  _shaderYUY2_709: {fileID: 4800000, guid: f3f6c4afacdaf104191347034b98ff91, type: 3}
+  _shaderUYVY: {fileID: 4800000, guid: 9744c5dd73ed9c94c9eceef7ac7aecc4, type: 3}
+  _shaderYVYU: {fileID: 4800000, guid: 9aa12fce5f0c9dc4da6a63145e07e670, type: 3}
+  _shaderHDYC: {fileID: 4800000, guid: f8cd0810f12a29f498e6a882baead2f2, type: 3}
+  _shaderNV12: {fileID: 4800000, guid: dc73ab3804ec95941996e01f8dfec364, type: 3}
+  _shaderCopy: {fileID: 4800000, guid: 93940781996181b4f916e2699bef27ec, type: 3}
+  _shaderHap_YCoCg: {fileID: 4800000, guid: 7930bff2071f0ab438cf4bc6e354607a, type: 3}
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8225388bc511e1f40be2e753ddefe282, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _folder: 
+  _filename: 
+  _loop: 0
+  _colourFormat: 2
+  _useAudioDelay: 0
+  _useAudioMixer: 0
+  _useDisplaySync: 0
+  _loadOnStart: 0
+  _playOnStart: 0
+  _editorPreview: 0
+  _volume: 1
+--- !u!114 &11400008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8225388bc511e1f40be2e753ddefe282, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _folder: 
+  _filename: 
+  _loop: 0
+  _colourFormat: 2
+  _useAudioDelay: 0
+  _useAudioMixer: 0
+  _useDisplaySync: 0
+  _loadOnStart: 0
+  _playOnStart: 0
+  _editorPreview: 0
+  _volume: 1
+--- !u!114 &11444744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6504c07c38ac6ec41aae933984864527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skin: {fileID: 11400000, guid: 41baf43ebef89204cadf52b9819b1bd2, type: 2}
+  _movie: {fileID: 0}
+  _display: {fileID: 0}
+--- !u!114 &11444746
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a5d721fed575f44bf6d31eb93b4fcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customSkin: {fileID: 11400000, guid: 41baf43ebef89204cadf52b9819b1bd2, type: 2}
+--- !u!114 &11492966
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1aaba01185d48e44904ccbd918f84b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movieA: {fileID: 11400008}
+  _movieB: {fileID: 11400008}
+  _folder: 
+  _filenames: []
+  textOnFrame:
+    m_Name: 
+    m_Normal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+    m_Hover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Active:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Focused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnNormal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnHover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnActive:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnFocused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Border:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Margin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Padding:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Overflow:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Font: {fileID: 0}
+    m_FontSize: 0
+    m_FontStyle: 0
+    m_Alignment: 0
+    m_WordWrap: 0
+    m_RichText: 1
+    m_TextClipping: 0
+    m_ImagePosition: 0
+    m_ContentOffset: {x: 0, y: 0}
+    m_FixedWidth: 0
+    m_FixedHeight: 0
+    m_StretchWidth: 1
+    m_StretchHeight: 0
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1

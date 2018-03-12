@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://teilab.tamu.edu/index.php?title=TAMU_Embodied_Interaction_Lab_%28TEILab%29"
+	xmlns:tns="http://teilab.tamu.edu/index.php?title=TAMU_Embodied_Interaction_Lab_%28TEILab%29"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	  
+	<element name="RUISInputManager" type="tns:RUISInputManagerType"/>
+	
+	<complexType name="RUISInputManagerType">
+		<sequence>
+			<element name="OptitrackSettings" type="tns:OptitrackSettingsType" maxOccurs="1"/>
+			
+			<element name="PSMoveSettings" type="tns:PSMoveSettingsType" maxOccurs="1"/>
+			
+			<element name="Kinect2Settings" type="tns:Kinect2SettingsType" maxOccurs="1"/>
+			
+		</sequence>
+	</complexType>
+
+	
+	<complexType name="BooleanType">
+		<attribute name="value" type="boolean" use="required" />
+	</complexType>
+	
+	<complexType name="StringType">
+		<attribute name="value" type="string" use="required" />
+	</complexType>
+	
+	<complexType name="IntType">
+		<attribute name="value" type="int" use="required" />
+	</complexType>
+	
+	<complexType name="FloatType">
+		<attribute name="value" type="float" use="required" />
+	</complexType>
+	
+	<complexType name="OptitrackSettingsType" >
+		<sequence>
+			<element name="enabled" type="tns:BooleanType"/>
+			<element name="ip" type="tns:StringType"/>
+			<element name="port" type="tns:IntType"/>
+			<element name="storyTheme" type="tns:StringType"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="RigidBodySettings" >
+		<sequence>
+			<element name="RigidBodyId0" type="tns:FloatType"/>
+			<element name="RigidBodyId1" type="tns:FloatType"/>
+			<element name="RigidBodyId2" type="tns:FloatType"/>
+			<element name="RigidBodyId3" type="tns:FloatType"/>
+			<element name="RigidBodyId4" type="tns:FloatType"/>
+			<element name="RigidBodyId5" type="tns:FloatType"/>
+			<element name="RigidBodyId6" type="tns:FloatType"/>
+			<element name="RigidBodyId7" type="tns:FloatType"/>
+			<element name="RigidBodyId8" type="tns:FloatType"/>
+			<element name="RigidBodyId9" type="tns:FloatType"/>
+			<element name="RigidBodyId10" type="tns:FloatType"/>
+			<element name="RigidBodyId11" type="tns:FloatType"/>
+			<element name="RigidBodyId12" type="tns:FloatType"/>
+			<element name="RigidBodyId13" type="tns:FloatType"/>
+			<element name="RigidBodyId14" type="tns:FloatType"/>
+			<element name="RigidBodyId15" type="tns:FloatType"/>
+		</sequence>
+	</complexType>
+			
+	
+	<complexType name="PSMoveSettingsType" >
+		<sequence>
+			<element name="enabled" type="tns:BooleanType"/>
+			<element name="ip" type="tns:StringType"/>
+			<element name="port" type="tns:IntType"/>
+			<element name="autoConnect" type="tns:BooleanType"/>
+			<element name="enableInGameCalibration" type="tns:BooleanType"/>
+			<element name="maxControllers" type="tns:IntType"/>
+		</sequence>
+	</complexType>
+
+
+	<complexType name="Kinect2SettingsType" mixed="true">
+		<sequence>
+			<element name="enabled" type="tns:BooleanType"/>
+			<element name="floorDetection" type="tns:BooleanType"/>
+		</sequence>
+	</complexType>
+	
+
+
+</schema>

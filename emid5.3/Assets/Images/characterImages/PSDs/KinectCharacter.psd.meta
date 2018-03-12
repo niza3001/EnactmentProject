@@ -1,0 +1,264 @@
+fileFormatVersion: 2
+guid: 746248c3c05a74b458a162bbd4c4c062
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Head_L
+    21300002: Head_R
+    21300004: Torso_L
+    21300006: UpperArm_L
+    21300008: Tosrso_F
+    21300010: UpperArm_R
+    21300012: Torso_B
+    21300014: Torso_R
+    21300016: LowerArm_L
+    21300018: LowerArm_R
+    21300020: Leg_Front_L
+    21300022: Leg_Front_R
+    21300024: Leg_Left_L
+    21300026: Leg_Left_R
+    21300028: Head_F
+    21300030: Head_B
+    21300032: Leg_Right_L
+    21300034: Leg_Right_R
+    21300036: KinectCharacter_0
+    21300038: Head
+    21300040: KinectCharacter_2
+    21300042: KinectCharacter_3
+    21300044: KinectCharacter_4
+    21300046: UpperArm_L
+    21300048: Torso
+    21300050: UpperArm_R
+    21300052: KinectCharacter_8
+    21300054: KinectCharacter_9
+    21300056: LowerArm_L
+    21300058: LowerArm_R
+    21300060: KinectCharacter_12
+    21300062: KinectCharacter_13
+    21300064: KinectCharacter_14
+    21300066: KinectCharacter_15
+    21300068: KinectCharacter_16
+    21300070: LeftLeg
+    21300072: RightLeg
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 2000
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: KinectCharacter_0
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 1169
+        width: 584
+        height: 740
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Head
+      rect:
+        serializedVersion: 2
+        x: 1078
+        y: 1157
+        width: 810
+        height: 734
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: KinectCharacter_2
+      rect:
+        serializedVersion: 2
+        x: 2122
+        y: 1136
+        width: 810
+        height: 738
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: KinectCharacter_3
+      rect:
+        serializedVersion: 2
+        x: 3191
+        y: 1165
+        width: 569
+        height: 734
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: KinectCharacter_4
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 689
+        width: 279
+        height: 423
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UpperArm_L
+      rect:
+        serializedVersion: 2
+        x: 1115
+        y: 921
+        width: 149
+        height: 110
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Torso
+      rect:
+        serializedVersion: 2
+        x: 1325
+        y: 747
+        width: 341
+        height: 390
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: UpperArm_R
+      rect:
+        serializedVersion: 2
+        x: 1706
+        y: 967
+        width: 147
+        height: 111
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: KinectCharacter_8
+      rect:
+        serializedVersion: 2
+        x: 2408
+        y: 732
+        width: 325
+        height: 392
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: KinectCharacter_9
+      rect:
+        serializedVersion: 2
+        x: 3321
+        y: 689
+        width: 271
+        height: 423
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LowerArm_L
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 722
+        width: 189
+        height: 185
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LowerArm_R
+      rect:
+        serializedVersion: 2
+        x: 1735
+        y: 656
+        width: 190
+        height: 185
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: KinectCharacter_12
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 301
+        width: 182
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: KinectCharacter_13
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 299
+        width: 201
+        height: 297
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: KinectCharacter_14
+      rect:
+        serializedVersion: 2
+        x: 3263
+        y: 235
+        width: 201
+        height: 297
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: KinectCharacter_15
+      rect:
+        serializedVersion: 2
+        x: 3512
+        y: 248
+        width: 180
+        height: 285
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LeftLeg
+      rect:
+        serializedVersion: 2
+        x: 1232
+        y: 385
+        width: 212
+        height: 349
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: RightLeg
+      rect:
+        serializedVersion: 2
+        x: 1531
+        y: 370
+        width: 231
+        height: 353
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 

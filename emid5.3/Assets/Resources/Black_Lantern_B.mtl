@@ -1,0 +1,87 @@
+# 
+# Wavefront material file
+# Converted by the DEEP Exploration  Deep Exploration 5 5.0.6.1889 Release
+# Right Hemisphere, LTD
+# http://www.righthemisphere.com/
+# 
+
+newmtl Lantern_Candle
+Ka 0.588235 0.588235 0.588235
+Kd 0.588235 0.588235 0.588235
+Ks 0.9 0.9 0.9
+illum 2
+Ns 4
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Lantern_Glass
+Ka 0 0 0
+Kd 0.5 0.5 0.5
+Ks 1 1 1
+illum 2
+Ns 955.426
+d 0.0235293
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Lantern_Diffuse
+Ka 0.184314 0.184314 0.184314
+Kd 0.184314 0.184314 0.184314
+Ks 0.9 0.9 0.9
+illum 2
+Ns 8
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Lantern_Diffuse_normal_Bump
+Ka 0.184314 0.184314 0.184314
+Kd 0.184314 0.184314 0.184314
+Ks 0.9 0.9 0.9
+illum 2
+Ns 8
+map_Kd 
+map_bump F:\\Box\\Lantern_Black_A\\Black_lantern_Nbump.jpg
+bump F:\\Box\\Lantern_Black_A\\Black_lantern_Nbump.jpg
+map_opacity F:\\Box\\Lantern_Black_A\\Black_lantern_opasity.jpg
+map_d F:\\Box\\Lantern_Black_A\\Black_lantern_opasity.jpg
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__172
+Ka 0.184314 0.184314 0.184314
+Kd 0.184314 0.184314 0.184314
+Ks 0.9 0.9 0.9
+illum 2
+Ns 8
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 

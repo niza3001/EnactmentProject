@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ns2:DIMEInputManager xmlns:ns2="http://teilab.tamu.edu/index.php?title=TAMU_Embodied_Interaction_Lab_%28TEILab%29">
+  <!--Boolean values always with a lower case, e.g. "true" or "false"-->
+  <OptitrackSettings>
+    <enabled value="true" />
+    <ip value="165.91.121.106" />
+    <port value="7899" />
+    <storyTheme value="An adventure in the jungle" />
+  </OptitrackSettings>
+  <Kinect2Settings>
+    <enabled value="false" />
+    <floorDetection value="true" />
+  </Kinect2Settings>
+  <PSMoveSettings>
+    <enabled value="false" />
+    <ip value="165.91.121.106" />
+    <port value="7899" />
+    <autoConnect value="true" />
+    <enableInGameCalibration value="false" />
+  </PSMoveSettings>
+  <RigidBodySettings>
+    <RigidBodyId0 value="1.00001" />
+    <RigidBodyId1 value="1.80001" />
+    <RigidBodyId2 value="1.00001" />
+    <RigidBodyId3 value="2.00001" />
+    <RigidBodyId4 value="2.00001" />
+    <RigidBodyId5 value="2.00001" />
+    <RigidBodyId6 value="1.00001" />
+    <RigidBodyId7 value="1.00001" />
+    <RigidBodyId8 value="1.00001" />
+    <RigidBodyId9 value="1.00001" />
+    <RigidBodyId10 value="1.00001" />
+    <RigidBodyId11 value="1.00001" />
+    <RigidBodyId12 value="1.00001" />
+    <RigidBodyId13 value="1.00001" />
+    <RigidBodyId14 value="1.00001" />
+    <RigidBodyId15 value="1.00001" />
+  </RigidBodySettings>
+</ns2:DIMEInputManager>

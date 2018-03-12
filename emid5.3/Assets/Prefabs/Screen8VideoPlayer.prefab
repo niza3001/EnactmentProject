@@ -1,0 +1,271 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 114: {fileID: 11400006}
+  - 114: {fileID: 11400004}
+  - 114: {fileID: 11400002}
+  - 114: {fileID: 11400000}
+  - 82: {fileID: 8200000}
+  - 131: {fileID: 13100000}
+  - 114: {fileID: 11400008}
+  m_Layer: 0
+  m_Name: Screen8VideoPlayer
+  m_TagString: VideoPlayer
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -2.79980826}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!82 &8200000
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673859134d4a1f44a889a8a58ccec93d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _logVideoLoads: 1
+  _shaderBGRA32: {fileID: 4800000, guid: 54153bfcee26a5a41a36a1f8df5c57f0, type: 3}
+  _shaderYUY2: {fileID: 4800000, guid: 6f8163253615321489fa569080dfe952, type: 3}
+  _shaderYUY2_709: {fileID: 4800000, guid: f3f6c4afacdaf104191347034b98ff91, type: 3}
+  _shaderUYVY: {fileID: 4800000, guid: 9744c5dd73ed9c94c9eceef7ac7aecc4, type: 3}
+  _shaderYVYU: {fileID: 4800000, guid: 9aa12fce5f0c9dc4da6a63145e07e670, type: 3}
+  _shaderHDYC: {fileID: 4800000, guid: f8cd0810f12a29f498e6a882baead2f2, type: 3}
+  _shaderNV12: {fileID: 4800000, guid: dc73ab3804ec95941996e01f8dfec364, type: 3}
+  _shaderCopy: {fileID: 4800000, guid: 93940781996181b4f916e2699bef27ec, type: 3}
+  _shaderHap_YCoCg: {fileID: 4800000, guid: 7930bff2071f0ab438cf4bc6e354607a, type: 3}
+  _useExternalTextures: 0
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e113bd23cdde05419d7958bcbbb4d27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movie: {fileID: 0}
+  _scaleMode: 2
+  _color: {r: 1, g: 1, b: 1, a: 1}
+  _alphaBlend: 0
+  _fullScreen: 1
+  _depth: 0
+  _x: 0
+  _y: 0
+  _width: 1
+  _height: 1
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43cf177f7a56f3e40a23f7a1623661fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _folder: 
+  _filename: 
+  _useStreamingAssetsPath: 0
+  _loop: 0
+  _colourFormat: 2
+  _allowAudio: 1
+  _useAudioDelay: 0
+  _useAudioMixer: 0
+  _useDisplaySync: 0
+  _loadOnStart: 1
+  _playOnStart: 1
+  _editorPreview: 0
+  _ignoreFlips: 1
+  _volume: 1
+  _textureFilterMode: 1
+  _textureWrapMode: 1
+  _clips: []
+--- !u!114 &11400006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6504c07c38ac6ec41aae933984864527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skin: {fileID: 0}
+  _movie: {fileID: 11400004}
+  _display: {fileID: 11400002}
+--- !u!114 &11400008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ed99170146a9dd40bd96055c499b374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customSkin: {fileID: 11400000, guid: 41baf43ebef89204cadf52b9819b1bd2, type: 2}
+  videoPlayerTexture: {fileID: 2800000, guid: 531df90e642946840a79d744110e0fe9, type: 3}
+  testingPhase: 0
+--- !u!131 &13100000
+GUITexture:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Texture: {fileID: 0}
+  m_Color: {r: .5, g: .5, b: .5, a: .5}
+  m_PixelInset:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  m_LeftBorder: 0
+  m_RightBorder: 0
+  m_TopBorder: 0
+  m_BottomBorder: 0
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _shaderBGRA32
+      value: 
+      objectReference: {fileID: 4800000, guid: 54153bfcee26a5a41a36a1f8df5c57f0, type: 3}
+    - target: {fileID: 0}
+      propertyPath: _shaderYUY2
+      value: 
+      objectReference: {fileID: 4800000, guid: 6f8163253615321489fa569080dfe952, type: 3}
+    - target: {fileID: 0}
+      propertyPath: _shaderYUY2_709
+      value: 
+      objectReference: {fileID: 4800000, guid: f3f6c4afacdaf104191347034b98ff91, type: 3}
+    - target: {fileID: 0}
+      propertyPath: _shaderUYVY
+      value: 
+      objectReference: {fileID: 4800000, guid: 9744c5dd73ed9c94c9eceef7ac7aecc4, type: 3}
+    - target: {fileID: 0}
+      propertyPath: _shaderYVYU
+      value: 
+      objectReference: {fileID: 4800000, guid: 9aa12fce5f0c9dc4da6a63145e07e670, type: 3}
+    - target: {fileID: 0}
+      propertyPath: _shaderHDYC
+      value: 
+      objectReference: {fileID: 4800000, guid: f8cd0810f12a29f498e6a882baead2f2, type: 3}
+    - target: {fileID: 0}
+      propertyPath: _shaderNV12
+      value: 
+      objectReference: {fileID: 4800000, guid: dc73ab3804ec95941996e01f8dfec364, type: 3}
+    - target: {fileID: 0}
+      propertyPath: _shaderCopy
+      value: 
+      objectReference: {fileID: 4800000, guid: 93940781996181b4f916e2699bef27ec, type: 3}
+    - target: {fileID: 0}
+      propertyPath: _shaderHap_YCoCg
+      value: 
+      objectReference: {fileID: 4800000, guid: 7930bff2071f0ab438cf4bc6e354607a, type: 3}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
