@@ -18,16 +18,18 @@ public class rigidBodyCustomize : MonoBehaviour {
 	public int _rigidBodyIndex;
     private RigidBodyData xmlRBDData; 
 	private RigidBodyManager rbm ;
+    private OptitrackStreamingClient streamClient; // Streaming Client
     private GameObject[] objectsRead;
     public Material standardMaterial;
     public Material transparentMaterial;
     public float magicScale = 1.0f; // Comes from inputConfig.Xml set by the user 
     private GameObject mesh, myGameManager;
+    public bool enableOptitrack=false; // Replacement flag for RUIS
 
 	//Use this for initialization
 	void Start () 
 	{
-        Debug.LogError("Start() being called from rigidBodyCustomize.cs");
+        //Debug.LogError("Start() being called from rigidBodyCustomize.cs");
         //objectsRead = new GameObject[1]; 
         myGameManager = GameObject.FindGameObjectWithTag("GameManager") as GameObject;
         
@@ -35,19 +37,22 @@ public class rigidBodyCustomize : MonoBehaviour {
         _rigidBodyIndex = PlayerPrefs.GetInt ("rigidBodyGrid");
 
         //OO* 1/29/2018
-        Debug.LogError("Value of rigidBodyIndex:");
-        Debug.LogError(_rigidBodyIndex);
+        //Debug.LogError("Value of rigidBodyIndex:");
+        //Debug.LogError(_rigidBodyIndex);
         // OO* 1/29/2018
         //NZ 3/3/18
         //_rigidBodyIndex = 1;
         if (_rigidBodyIndex > 0 && _rigidBodyIndex <=15)
 		{
-            Debug.LogError("Rigid body index is greater than 0 and less than or equal to 15.");
+            Debug.Log("Rigid body index is greater than 0 and less than or equal to 15.");
             rbm = (RigidBodyManager)GameObject.FindGameObjectWithTag ("RBM").GetComponent<RigidBodyManager>();
-			InstantiateMesh ();
+            streamClient = (OptitrackStreamingClient)GameObject.FindGameObjectWithTag("Client").GetComponent<OptitrackStreamingClient>();
+
+            InstantiateMesh ();
 		}
         if (_rigidBodyIndex != 0 && _rigidBodyIndex >= 15)
         {
+            Debug.Log("Code not reached");
             xmlRBDData = myGameManager.GetComponent<GameManager>().xmlDataList.rigidBodyList[_rigidBodyIndex - 16];
             // OO* 1/29/2018
             Debug.LogError(xmlRBDData);
@@ -77,7 +82,7 @@ public class rigidBodyCustomize : MonoBehaviour {
     
 	void InstantiateMesh()
 	{
-        Debug.LogError("Entering InstantiateMesh()");
+        //Debug.LogError("Entering InstantiateMesh()");
         int children = transform.childCount;
         for (int i = children - 1; i >= 0; i--)
         {
@@ -90,7 +95,7 @@ public class rigidBodyCustomize : MonoBehaviour {
         //RUISInputManager go = new RUISInputManager();
         //go = myGameManager.GetComponent<RUISInputManager>(); 
         mesh.transform.localScale = myGameManager.GetComponent<RUISInputManager>().rbdXmlScale[(int)_rigidBodyIndex];
-        if (myGameManager.GetComponent<RUISInputManager>().enableKinect2 && myGameManager.GetComponent<RUISInputManager>().enablePSMove)
+        /*if (myGameManager.GetComponent<RUISInputManager>().enableKinect2 && myGameManager.GetComponent<RUISInputManager>().enablePSMove)
         {
             // OO* 1/29/2018
             //Debug.LogError("PSMove was selected.");
@@ -103,6 +108,13 @@ public class rigidBodyCustomize : MonoBehaviour {
            // Debug.LogError("Optitrack was selected.");
             mesh.GetComponent<RUISPSMoveWand>().enabled = false;
             mesh.GetComponent<OptiTrackObject>().enabled = true; 
+        }*/
+
+        if(enableOptitrack)
+        {
+            Debug.Log("Only Optitrack Flow.");
+            mesh.GetComponent<OptitrackRigidBody>().StreamingClient = streamClient;
+            mesh.GetComponent<OptitrackRigidBody>().enabled = true;
         }
     }
 	// Update is called once per frame

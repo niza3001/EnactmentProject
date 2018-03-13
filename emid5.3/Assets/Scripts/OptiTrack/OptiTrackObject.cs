@@ -5,8 +5,8 @@ using System.Collections;
 public enum physicalObject
 {
    
-    Lantern = 0,
-    Racket = 1, 
+    Lantern,
+    Racket, 
     SmallBox, 
     Sphere, 
     Stick, 

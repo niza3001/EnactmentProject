@@ -24,6 +24,7 @@ TagManager:
   - Kinect
   - StatusText
   - Man
+  - Client
   layers:
   - Default
   - TransparentFX

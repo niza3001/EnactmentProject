@@ -9,7 +9,8 @@ public enum TransformType
 {
     Optitrack = 0,
     Excel,
-    Kinect
+    Kinect,
+    NewOptitrack
 }
 
 
@@ -77,6 +78,10 @@ public class TransformManager : MonoBehaviour
 			OptitrackManagement.DirectMulticastSocketClient.Start ();
 			Application.runInBackground = true;
 		}
+        else if(currentTransform == TransformType.NewOptitrack)
+        {
+            Debug.Log("No new implementation.");
+        }
         else if (currentTransform == TransformType.Excel) // USE EXCEL DATA 
 		{
 			excelFilePath = Application.dataPath + "/" + excelFilePath;
