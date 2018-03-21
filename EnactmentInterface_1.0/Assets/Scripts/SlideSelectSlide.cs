@@ -93,7 +93,11 @@ public class SlideSelectSlide : MonoBehaviour, IPointerClickHandler, IBeginDragH
     // Update is called once per frame
     void Update()
     {
+        if (selected == true)
+        {
+            GetComponent<SlideData>().updateEnactmentScreen();
 
+        }
     }
 
     //assign new slide id - see SlideArray

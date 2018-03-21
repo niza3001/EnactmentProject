@@ -16,14 +16,14 @@ public class ObjectArray : MonoBehaviour
     public Sprite backdropSprite;
 
     //arrays for the sprites to represent the objects and their corresponding objects
-    public GameObject[] charaPoses;
-    public Sprite[] charaSprites;
+    public GameObject[] CharaPoseSets;
+    //public Sprite[] charaSprites;
 
-    public Sprite[] itemSprites;
-    public GameObject[] itemModels;
+    //public Sprite[] itemSprites;
+    public GameObject[] Items;
 
-    public Sprite[] backdropFulls;
-    public Sprite[] backdropSprites;
+    public GameObject[] Backdrops;
+    //public Sprite[] backdropSprites;
 
     private int state = 1; //1-charas, 2-items, 3-backdropSprites
 
@@ -35,15 +35,15 @@ public class ObjectArray : MonoBehaviour
         {
             case 1:
                 if (charaSprite == null) { Debug.Log("charaSprite is null - see ObjectArray script - SB"); }
-                else { displaySet(charaSprites, "chara", charaSprite); }
+                else { displaySet(CharaPoseSets, "chara", charaSprite); }
                 break;
             case 2:
                 if (itemSprite == null) { Debug.Log("itemSprite is null - see ObjectArray script - SB"); }
-                else { displaySet(itemSprites, "item", itemSprite); }
+                else { displaySet(Items, "item", itemSprite); }
                 break;
             case 3:
                 if (backdropSprite == null) { Debug.Log("backdropSprite is null - see ObjectArray script - SB"); }
-                else { displaySet(backdropSprites, "backdrop", backdropSprite); }
+                else { displaySet(Backdrops, "backdrop", backdropSprite); }
                 break;
             default:
                 Debug.Log("private int state has been initialized to an out-of-bounds value - see ObjectArray script - SB");
@@ -60,15 +60,15 @@ public class ObjectArray : MonoBehaviour
         {
             case 1:
                 state = 2;
-                displaySet(itemSprites, "item", itemSprite);
+                displaySet(Items, "item", itemSprite);
                 break;
             case 2:
                 state = 3;
-                displaySet(backdropSprites, "backdrop", backdropSprite);
+                displaySet(Backdrops, "backdrop", backdropSprite);
                 break;
             case 3:
                 state = 1;
-                displaySet(charaSprites, "chara", charaSprite);
+                displaySet(CharaPoseSets, "chara", charaSprite);
                 break;
             default:
                 Debug.Log("private int state is an out-of-bounds value - see ObjectArray script - SB");
@@ -84,15 +84,15 @@ public class ObjectArray : MonoBehaviour
         {
             case 1:
                 state = 3;
-                displaySet(backdropSprites, "backdrop", backdropSprite);
+                displaySet(Backdrops, "backdrop", backdropSprite);
                 break;
             case 2:
                 state = 1;
-                displaySet(charaSprites, "chara", charaSprite);
+                displaySet(CharaPoseSets, "chara", charaSprite);
                 break;
             case 3:
                 state = 2;
-                displaySet(itemSprites, "item", itemSprite);
+                displaySet(Items, "item", itemSprite);
                 break;
             default:
                 Debug.Log("private int state is an out-of-bounds value - see ObjectArray script - SB");
@@ -103,7 +103,7 @@ public class ObjectArray : MonoBehaviour
     }
 
     //create selection of objects based on type
-    void displaySet(Sprite[] spriteArray, string objTag, Sprite sprite)
+    void displaySet(GameObject[] objectArray, string objTag, Sprite sprite)
     {
         //set new main icon
         this.GetComponent<Image>().sprite = sprite;
@@ -112,7 +112,7 @@ public class ObjectArray : MonoBehaviour
         int newX;
         int newY;
 
-        for (int i = 0; i < spriteArray.Length; i++)
+        for (int i = 0; i < objectArray.Length; i++)
         {
 
             /*Place the object holder*/
@@ -128,7 +128,7 @@ public class ObjectArray : MonoBehaviour
             newObj = (GameObject)Instantiate(dragObject, transform.position, transform.rotation);
 
             newObj.GetComponent<DragMe>().assignID(i);
-            newObj.GetComponent<Image>().sprite = spriteArray[i];
+            newObj.GetComponent<Image>().sprite = objectArray[i].GetComponent<Icon>().iconSprite;
             newObj.tag = objTag;
             newObj.transform.SetParent(this.transform);
 

@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 public class SlideData : MonoBehaviour {
 
     /*IN PROGRESS - this is a script attached to each slide to record which index of each object type it holds, as well as its recording data*/
@@ -11,7 +12,7 @@ public class SlideData : MonoBehaviour {
     private int backdropIndex;
     private int itemIndex;
     private AudioSource slideAudio;
-
+    private int slidePose = 0;
 	// Use this for initialization
 	void Start () {
         slideAudio = gameObject.AddComponent<AudioSource>();
@@ -86,4 +87,19 @@ public class SlideData : MonoBehaviour {
     {
         return itemIndex;
     }
+
+    public void updateEnactmentScreen()
+    {
+        Sprite chara = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().CharaPoseSets[charaIndex].GetComponent<CharaPoses>().poses[slidePose];
+        Sprite backdrop = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().Backdrops[backdropIndex].GetComponent<Backdrop>().backdrop; 
+        GameObject.Find("EnactmentBackdrop").GetComponent<Image>().sprite = backdrop;
+        GameObject.Find("EnactmentCharacter").GetComponent<Image>().sprite = chara;
+
+    }
+
+    public void setPose(int sp)
+    {
+        slidePose = sp;
+    }
+
 }

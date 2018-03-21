@@ -143,4 +143,112 @@ public class SlideNumbering : MonoBehaviour
         }
     }
 
+
+    public void poseZero()
+    {
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
+            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+            for (int k = 0; k < grandchildren.Length; k++)
+            {
+                if (grandchildren[k].getSelected() == true)
+                {
+                    
+                    grandchildrenData[k].setPose(0);
+                    
+                }
+
+            }
+        }
+    }
+
+    public void poseOne()
+    {
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
+            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+            for (int k = 0; k < grandchildren.Length; k++)
+            {
+                if (grandchildren[k].getSelected() == true)
+                {
+
+                    grandchildrenData[k].setPose(1);
+
+                }
+
+            }
+        }
+    }
+
+    public void poseTwo()
+    {
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
+            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+            for (int k = 0; k < grandchildren.Length; k++)
+            {
+                if (grandchildren[k].getSelected() == true)
+                {
+
+                    grandchildrenData[k].setPose(2);
+
+                }
+
+            }
+        }
+    }
+
+    public void poseThree()
+    {
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
+            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+            for (int k = 0; k < grandchildren.Length; k++)
+            {
+                if (grandchildren[k].getSelected() == true)
+                {
+
+                    grandchildrenData[k].setPose(3);
+
+                }
+
+            }
+        }
+    }
+
+    public void poseFour()
+    {
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
+            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+            for (int k = 0; k < grandchildren.Length; k++)
+            {
+                if (grandchildren[k].getSelected() == true)
+                {
+
+                    grandchildrenData[k].setPose(4);
+
+                }
+
+            }
+        }
+    }
+
+
+
 }

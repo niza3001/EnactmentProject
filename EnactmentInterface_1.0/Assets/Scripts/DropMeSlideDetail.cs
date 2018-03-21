@@ -142,17 +142,17 @@ public class DropMeSlideDetail : MonoBehaviour, IDropHandler, IPointerEnterHandl
 
     int compareIndex(string tag, Sprite sprite)
     {
-        Sprite[] objArray= GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().itemSprites; ;
+        GameObject[] objArray= GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().Items; ;
         switch (tag)
         {
             case "item":
-                objArray = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().itemSprites;
+                objArray = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().Items;
                 break;
             case "chara":
-                objArray = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().charaSprites;
+                objArray = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().CharaPoseSets;
                 break;
             case "backdrop":
-                objArray = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().backdropSprites;
+                objArray = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().Backdrops;
                 break;
             default:
                 break;
@@ -160,7 +160,7 @@ public class DropMeSlideDetail : MonoBehaviour, IDropHandler, IPointerEnterHandl
 
         for (int i = 0; i<objArray.Length;i++ )
         {
-            if (objArray[i]==sprite) { return i; }
+            if (objArray[i].GetComponent<Icon>().iconSprite==sprite) { return i; }
         }
 
         return 0;
