@@ -13,6 +13,9 @@ public class SlideData : MonoBehaviour {
     private int itemIndex;
     private AudioSource slideAudio;
     private int slidePose = 0;
+    private bool isItem = false;
+    private bool isChara = false;
+    private bool isBackdrop = false;
 	// Use this for initialization
 	void Start () {
         slideAudio = gameObject.AddComponent<AudioSource>();
@@ -61,16 +64,19 @@ public class SlideData : MonoBehaviour {
     public void setChara(int ind)
     {
         charaIndex = ind;
+        isChara = true;
     }
 
     public void setBackdrop(int ind)
     {
         backdropIndex = ind;
+        isBackdrop = true;
     }
 
     public void setItem(int ind)
     {
         itemIndex = ind;
+        isItem = true;
     }
 
     public int getChara()
@@ -91,8 +97,18 @@ public class SlideData : MonoBehaviour {
     public void updateEnactmentScreen()
     {
         Sprite chara = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().CharaPoseSets[charaIndex].GetComponent<CharaPoses>().poses[slidePose];
-        Sprite backdrop = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().Backdrops[backdropIndex].GetComponent<Backdrop>().backdrop; 
-        GameObject.Find("EnactmentBackdrop").GetComponent<Image>().sprite = backdrop;
+        Sprite backdrop = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().Backdrops[backdropIndex].GetComponent<Backdrop>().backdrop;
+        GameObject item = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().Items[backdropIndex];
+
+       /* if (item!= GameObject.FindGameObjectWithTag("current_item"))
+        {
+            Destroy(GameObject.FindGameObjectWithTag("current_item"));
+            GameObject newItem = (GameObject)Instantiate(item, item.GetComponent<Item>().getPosition(slidePose), transform.rotation);
+            newItem.transform.localScale = new Vector3(newItem.GetComponent<Item>().getScale(), newItem.GetComponent<Item>().getScale(), newItem.GetComponent<Item>().getScale());
+            newItem.tag = "current_item";
+        }
+        */
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = backdrop;
         GameObject.Find("EnactmentCharacter").GetComponent<Image>().sprite = chara;
 
     }
@@ -100,6 +116,12 @@ public class SlideData : MonoBehaviour {
     public void setPose(int sp)
     {
         slidePose = sp;
+    }
+
+    public bool isFilled()
+    {
+        if (isChara==true && isItem == true && isBackdrop == true) { return true; }
+        else { return false; }
     }
 
 }

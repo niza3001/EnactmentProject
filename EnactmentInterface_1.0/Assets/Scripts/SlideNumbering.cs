@@ -23,6 +23,11 @@ public class SlideNumbering : MonoBehaviour
     {
 
         int num = 1;
+        GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = false;
+        GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = true;
+
+        SlideArray[] arrays = GetComponentsInChildren<SlideArray>();
+ 
 
         foreach (Transform child in this.transform) //Gets all slide arrays set as children to the GameObject with this script
         {
@@ -34,6 +39,16 @@ public class SlideNumbering : MonoBehaviour
                     {
                         grandchild.GetComponentInChildren<Text>().text = num.ToString();
                         num++;
+                    }
+
+                    if (grandchild.GetComponentInChildren<SlideSelectSlide>().getSelected() && grandchild.GetComponentInChildren<SlideData>().isFilled())
+                    {
+                        GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = true;
+                    }
+
+                    if (grandchild.GetComponentInChildren<SlideData>().isFilled() != true ||(arrays[0].getCurrent() > 0 && arrays[1].getCurrent() > 0 && arrays[2].getCurrent() > 0==false))
+                    {
+                        GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false;
                     }
                 }
             }

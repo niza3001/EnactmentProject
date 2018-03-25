@@ -17,6 +17,10 @@ TagManager:
   - Canvas
   - border
   - object_arrays
+  - record_screen
+  - play_screen
+  - title_input
+  - current_item
   layers:
   - Default
   - TransparentFX
@@ -26,7 +30,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Item
   - 
   - 
   - 

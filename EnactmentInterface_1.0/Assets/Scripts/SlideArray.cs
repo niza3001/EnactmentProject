@@ -32,6 +32,11 @@ public class SlideArray : MonoBehaviour
 
     }
 
+    public int getCurrent()
+    {
+        return currentListID;
+    }
+
     public void addSlide()
     {
         if (slideBase != null && currentListID < 5)
