@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4812313339204464}
   - component: {fileID: 114239905328389062}
   - component: {fileID: 114645344991171360}
+  - component: {fileID: 114622201948131252}
   m_Layer: 0
   m_Name: Girl4
   m_TagString: Untagged
@@ -53,6 +54,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconSprite: {fileID: 21300000, guid: 4b7a29c815704de4db78dc8f40a5dd1b, type: 3}
+--- !u!114 &114622201948131252
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1334427505721000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 087c7d9ef34a28e4bae73f051a5a28ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poses:
+  - {fileID: 21300000, guid: 25f0ae26420ed5549aa16fbd18cc2f1f, type: 3}
+  - {fileID: 21300000, guid: 7c22b99b8cda8694ab14e58533b5e0ee, type: 3}
+  - {fileID: 21300000, guid: 45a3425c8d2a77f4abecb1aa8c29b9bc, type: 3}
+  - {fileID: 21300000, guid: 82ca6ba1d49573746b9689f6ee7580d1, type: 3}
+  - {fileID: 21300000, guid: 4d1d5b7aacc77b44386208a30299da62, type: 3}
+  Test: 0
 --- !u!114 &114645344991171360
 MonoBehaviour:
   m_ObjectHideFlags: 1

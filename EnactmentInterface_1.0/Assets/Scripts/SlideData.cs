@@ -16,6 +16,7 @@ public class SlideData : MonoBehaviour {
     private bool isItem = false;
     private bool isChara = false;
     private bool isBackdrop = false;
+    private bool useGround = false;
 	// Use this for initialization
 	void Start () {
         slideAudio = gameObject.AddComponent<AudioSource>();
@@ -98,26 +99,62 @@ public class SlideData : MonoBehaviour {
     {
         Sprite chara = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().CharaPoseSets[charaIndex].GetComponent<CharaPoses>().poses[slidePose];
         Sprite backdrop = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().Backdrops[backdropIndex].GetComponent<Backdrop>().backdrop;
-        GameObject item = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().Items[backdropIndex];
+        GameObject item = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().Items[itemIndex];
+        ItemPoses itempose = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ItemPoses>();
 
-       /* if (item!= GameObject.FindGameObjectWithTag("current_item"))
+        if (item!= GameObject.FindGameObjectWithTag("current_item"))
         {
             Destroy(GameObject.FindGameObjectWithTag("current_item"));
-            GameObject newItem = (GameObject)Instantiate(item, item.GetComponent<Item>().getPosition(slidePose), transform.rotation);
+            GameObject newItem = (GameObject)Instantiate(item, itempose.getItemPos(slidePose, useGround), item.transform.rotation);
+            //newItem.transform.SetParent(GameObject.FindGameObjectWithTag("enactment_canvas").transform);
+            //item.transform.position = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().CharaPoseSets[charaIndex].GetComponent<CharaPoses>().getItemPos(slidePose);
             newItem.transform.localScale = new Vector3(newItem.GetComponent<Item>().getScale(), newItem.GetComponent<Item>().getScale(), newItem.GetComponent<Item>().getScale());
             newItem.tag = "current_item";
         }
-        */
+        
         GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = backdrop;
         GameObject.Find("EnactmentCharacter").GetComponent<Image>().sprite = chara;
 
     }
 
-    public void setPose(int sp)
+    public void updateCharaPose()
     {
-        slidePose = sp;
+        Sprite chara = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ObjectArray>().CharaPoseSets[charaIndex].GetComponent<CharaPoses>().poses[slidePose];
+        ItemPoses itempose = GameObject.FindGameObjectWithTag("object_arrays").GetComponent<ItemPoses>();
+        GameObject item = GameObject.FindGameObjectWithTag("current_item");
+
+        if (item != null)
+        {
+            item.transform.position = itempose.getItemPos(slidePose,useGround);
+            //item.transform.SetPositionAndRotation(charapose.getItemPos(slidePose), item.transform.rotation);
+            Debug.Log(useGround);
+            Debug.Log("don't be mad at me I'm trying my bestttt");
+        }
+        GameObject.Find("EnactmentCharacter").GetComponent<Image>().sprite = chara;
+
     }
 
+    public void setPose(int sp, bool ground)
+    {
+        if (!ground)
+        {
+            slidePose = sp;
+            useGround = false;
+        }
+        else { slidePose = sp;
+            useGround = true; }
+       
+    }
+
+    public bool getGround()
+    {
+        return useGround;
+    }
+
+    public int getPose()
+    {
+        return slidePose;
+    }
     public bool isFilled()
     {
         if (isChara==true && isItem == true && isBackdrop == true) { return true; }

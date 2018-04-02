@@ -93,11 +93,11 @@ public class SlideSelectSlide : MonoBehaviour, IPointerClickHandler, IBeginDragH
     // Update is called once per frame
     void Update()
     {
-        if (selected == true)
-        {
-            GetComponent<SlideData>().updateEnactmentScreen();
-
-        }
+           /* if (selected == true)
+            {
+                GetComponent<SlideData>().updateCharaPose();
+            }*/
+        
     }
 
     //assign new slide id - see SlideArray
@@ -218,7 +218,6 @@ public class SlideSelectSlide : MonoBehaviour, IPointerClickHandler, IBeginDragH
         if (moving == false)
         {
             selectMe();
-            Debug.Log(borderName);
         }
 
     }

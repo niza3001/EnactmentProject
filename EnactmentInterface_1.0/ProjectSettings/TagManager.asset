@@ -21,6 +21,11 @@ TagManager:
   - play_screen
   - title_input
   - current_item
+  - record_button
+  - play_slide_button
+  - all_slides
+  - enactment_canvas
+  - pose_button
   layers:
   - Default
   - TransparentFX

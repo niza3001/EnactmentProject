@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4238089228714796}
   - component: {fileID: 114074387548902212}
   - component: {fileID: 114784107715439248}
+  - component: {fileID: 114973989639379438}
   m_Layer: 0
   m_Name: Girl3
   m_TagString: Untagged
@@ -70,3 +71,21 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 241dd76803cb37c44beeba0d3e044431, type: 3}
   - {fileID: 21300000, guid: 2996348d8ac20f14eadaa151863c2fbf, type: 3}
   - {fileID: 21300000, guid: 9dc7e9927e9788e4ab3a6361fdde7981, type: 3}
+--- !u!114 &114973989639379438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1148796239622750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 087c7d9ef34a28e4bae73f051a5a28ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poses:
+  - {fileID: 21300000, guid: 3f117c7e75bac664ea626a172b2e282f, type: 3}
+  - {fileID: 21300000, guid: 7b99cee0396ca52468fc4b3ad0ae7436, type: 3}
+  - {fileID: 21300000, guid: 241dd76803cb37c44beeba0d3e044431, type: 3}
+  - {fileID: 21300000, guid: 2996348d8ac20f14eadaa151863c2fbf, type: 3}
+  - {fileID: 21300000, guid: 9dc7e9927e9788e4ab3a6361fdde7981, type: 3}
+  Test: 0

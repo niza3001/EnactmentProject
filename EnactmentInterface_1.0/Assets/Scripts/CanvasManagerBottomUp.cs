@@ -22,6 +22,7 @@ public class CanvasManagerBottomUp : MonoBehaviour {
     //Go to enactment canvas
     public void toEnactment()
     {
+       
         disableCanvas(timelineCanvas);
         disableCanvas(playCanvas);
         enableCanvas(enactmentCanvas);

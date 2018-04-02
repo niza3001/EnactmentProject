@@ -66,11 +66,12 @@ public class SlideNumbering : MonoBehaviour
         for (int i = 0; i < children.Length; i++)
         {
             SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
-
+            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
             for (int k = 0; k < grandchildren.Length; k++)
             {
                 if (i == section && grandchildren[k].getListID() == slide)
                 {
+                    
                     //do nothing, the slide calling this function handles its own state
                 }
                 else { grandchildren[k].deselectMe(); }
@@ -104,6 +105,9 @@ public class SlideNumbering : MonoBehaviour
     public void recordSelectedSlide()
     {
 
+        GameObject playButton = GameObject.FindGameObjectWithTag("play_slide_button");
+        
+
         SlideArray[] children = GetComponentsInChildren<SlideArray>();
 
         for (int i = 0; i < children.Length; i++)
@@ -119,11 +123,13 @@ public class SlideNumbering : MonoBehaviour
                     {
                         grandchildrenData[k].startRecord();
                         isRecording = true;
+                        playButton.GetComponent<Button>().interactable = false;
                     }
                     else
                     {
                         grandchildrenData[k].endRecord();
                         isRecording = false;
+                        playButton.GetComponent<Button>().interactable = true;
                     }
 
 
@@ -172,7 +178,7 @@ public class SlideNumbering : MonoBehaviour
                 if (grandchildren[k].getSelected() == true)
                 {
                     
-                    grandchildrenData[k].setPose(0);
+                    grandchildrenData[k].setPose(0, grandchildrenData[k].getGround());
                     
                 }
 
@@ -193,7 +199,7 @@ public class SlideNumbering : MonoBehaviour
                 if (grandchildren[k].getSelected() == true)
                 {
 
-                    grandchildrenData[k].setPose(1);
+                    grandchildrenData[k].setPose(1, grandchildrenData[k].getGround());
 
                 }
 
@@ -214,7 +220,7 @@ public class SlideNumbering : MonoBehaviour
                 if (grandchildren[k].getSelected() == true)
                 {
 
-                    grandchildrenData[k].setPose(2);
+                    grandchildrenData[k].setPose(2, grandchildrenData[k].getGround());
 
                 }
 
@@ -235,7 +241,7 @@ public class SlideNumbering : MonoBehaviour
                 if (grandchildren[k].getSelected() == true)
                 {
 
-                    grandchildrenData[k].setPose(3);
+                    grandchildrenData[k].setPose(3, grandchildrenData[k].getGround());
 
                 }
 
@@ -256,7 +262,7 @@ public class SlideNumbering : MonoBehaviour
                 if (grandchildren[k].getSelected() == true)
                 {
 
-                    grandchildrenData[k].setPose(4);
+                    grandchildrenData[k].setPose(4, grandchildrenData[k].getGround());
 
                 }
 
@@ -264,6 +270,90 @@ public class SlideNumbering : MonoBehaviour
         }
     }
 
+    public void groundPose()
+    {
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
 
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
+            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+            for (int k = 0; k < grandchildren.Length; k++)
+            {
+                if (grandchildren[k].getSelected() == true)
+                {
+
+                    grandchildrenData[k].setPose(grandchildrenData[k].getPose(), true);
+
+                }
+
+            }
+        }
+
+
+    }
+
+    public void updateEnactmentPose()
+    {
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
+            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+            for (int k = 0; k < grandchildren.Length; k++)
+            {
+                if (grandchildren[k].getSelected() == true)
+                {
+
+                    grandchildrenData[k].updateCharaPose();
+
+                }
+
+            }
+        }
+    }
+
+    public void updateEnactmentObjects()
+    {
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
+            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+            for (int k = 0; k < grandchildren.Length; k++)
+            {
+                if (grandchildren[k].getSelected() == true)
+                {
+
+                    grandchildrenData[k].updateEnactmentScreen();
+
+                }
+
+            }
+        }
+    }
+
+    public void handheldObjects()
+    {
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
+            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+            for (int k = 0; k < grandchildren.Length; k++)
+            {
+                if (grandchildren[k].getSelected() == true)
+                {
+
+                    grandchildrenData[k].setPose(grandchildrenData[k].getPose(), false);
+
+                }
+
+            }
+        }
+    }
 
 }
