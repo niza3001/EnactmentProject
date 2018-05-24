@@ -17,6 +17,8 @@ public class SlideData : MonoBehaviour {
     private bool isChara = false;
     private bool isBackdrop = false;
     private bool useGround = false;
+    private int groundPosition = 0;
+    private int charaPosition = 0;
 	// Use this for initialization
 	void Start () {
         slideAudio = gameObject.AddComponent<AudioSource>();
@@ -30,7 +32,7 @@ public class SlideData : MonoBehaviour {
 
     public void startRecord()
     {
-        slideAudio.clip = Microphone.Start(null, true, 300, 44100);
+        slideAudio.clip = Microphone.Start(null, true, 600, 44100);
         Debug.Log("We have started");
     }
 

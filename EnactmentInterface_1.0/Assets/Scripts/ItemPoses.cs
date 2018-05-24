@@ -12,7 +12,40 @@ public class ItemPoses : MonoBehaviour {
     public Vector3 pose4;
 
     public Vector3 groundPose;
-    
+
+    public Vector3 groundPoseLeft;
+    public Vector3 groundPoseMid;
+    public Vector3 groundPoseRight;
+
+    public Vector3 charaPose0_Left;
+    public Vector3 charaPose1_Left;
+    public Vector3 charaPose2_Left;
+    public Vector3 charaPose3_Left;
+    public Vector3 charaPose4_Left;
+
+    public Vector3 charaPose0_Mid;
+    public Vector3 charaPose1_Mid;
+    public Vector3 charaPose2_Mid;
+    public Vector3 charaPose3_Mid;
+    public Vector3 charaPose4_Mid;
+
+    public Vector3 charaPose0_Right;
+    public Vector3 charaPose1_Right;
+    public Vector3 charaPose2_Right;
+    public Vector3 charaPose3_Right;
+    public Vector3 charaPose4_Right;
+
+    public Vector3 charaPose0_Up;
+    public Vector3 charaPose1_Up;
+    public Vector3 charaPose2_Up;
+    public Vector3 charaPose3_Up;
+    public Vector3 charaPose4_Up;
+
+    public Vector3 charaLeft;
+    public Vector3 charaMid;
+    public Vector3 charaRight;
+    public Vector3 charaUp;
+
     // Use this for initialization
     void Start () {
 		

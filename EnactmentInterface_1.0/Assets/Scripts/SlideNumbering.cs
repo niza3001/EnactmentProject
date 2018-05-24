@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
+
+
 public class SlideNumbering : MonoBehaviour
 {
 
@@ -11,8 +14,13 @@ public class SlideNumbering : MonoBehaviour
     /*For this reason, it's important to keep the slides in order in the heirarchy by their id in each array*/
 
     private bool isRecording = false;
-
+    private bool donePlanning = false;
+    private bool ready = false;
     // Use this for initialization
+
+    public Sprite recordStop;
+    public Sprite recordStart;
+
     void Start()
     {
 
@@ -21,13 +29,14 @@ public class SlideNumbering : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        ready = true;
         int num = 1;
         GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = false;
-        GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = true;
+
+        if (donePlanning == false) { GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = true; }
 
         SlideArray[] arrays = GetComponentsInChildren<SlideArray>();
- 
+
 
         foreach (Transform child in this.transform) //Gets all slide arrays set as children to the GameObject with this script
         {
@@ -46,9 +55,10 @@ public class SlideNumbering : MonoBehaviour
                         GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = true;
                     }
 
-                    if (grandchild.GetComponentInChildren<SlideData>().isFilled() != true ||(arrays[0].getCurrent() > 0 && arrays[1].getCurrent() > 0 && arrays[2].getCurrent() > 0==false))
+                    if (grandchild.GetComponentInChildren<SlideData>().isFilled() != true || (arrays[0].getCurrent() > 0 && arrays[1].getCurrent() > 0 && arrays[2].getCurrent() > 0 == false))
                     {
-                        GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false;
+                        if (ready == false) { GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false; }
+                        ready = false;
                     }
                 }
             }
@@ -57,9 +67,22 @@ public class SlideNumbering : MonoBehaviour
     }
 
 
+    public void donePlan()
+    {
+        if (ready == true)
+        {
+            GameObject.FindGameObjectWithTag("play_screen").SetActive(false);
+
+            GameObject.FindGameObjectWithTag("record_screen").GetComponent<Image>().color = new Color(1, 0, 0);
+            GameObject.FindGameObjectWithTag("instructions").GetComponent<Text>().text = "Create My Story";
+            //GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = true;
+            donePlanning = true;
+        }
+    }
+
     //deselects all slides across all three arrays so only one slide is selected
     //is called by SelectMe in SlideSelectSlide script, by the slide being selected
-    public void selectNew(int section, int slide) 
+    public void selectNew(int section, int slide)
     {
         SlideArray[] children = GetComponentsInChildren<SlideArray>();
 
@@ -71,7 +94,7 @@ public class SlideNumbering : MonoBehaviour
             {
                 if (i == section && grandchildren[k].getListID() == slide)
                 {
-                    
+
                     //do nothing, the slide calling this function handles its own state
                 }
                 else { grandchildren[k].deselectMe(); }
@@ -106,7 +129,8 @@ public class SlideNumbering : MonoBehaviour
     {
 
         GameObject playButton = GameObject.FindGameObjectWithTag("play_slide_button");
-        
+        GameObject backButton = GameObject.FindGameObjectWithTag("back_button");
+        GameObject recordButton = GameObject.FindGameObjectWithTag("record_button");
 
         SlideArray[] children = GetComponentsInChildren<SlideArray>();
 
@@ -116,7 +140,8 @@ public class SlideNumbering : MonoBehaviour
             SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
             for (int k = 0; k < grandchildren.Length; k++)
             {
-                if (grandchildren[k].getSelected() == true) {
+                if (grandchildren[k].getSelected() == true)
+                {
 
 
                     if (isRecording == false)
@@ -124,12 +149,16 @@ public class SlideNumbering : MonoBehaviour
                         grandchildrenData[k].startRecord();
                         isRecording = true;
                         playButton.GetComponent<Button>().interactable = false;
+                        backButton.GetComponent<Button>().interactable = false;
+                        recordButton.GetComponent<Image>().sprite = recordStop;
                     }
                     else
                     {
                         grandchildrenData[k].endRecord();
                         isRecording = false;
                         playButton.GetComponent<Button>().interactable = true;
+                        backButton.GetComponent<Button>().interactable = true;
+                        recordButton.GetComponent<Image>().sprite = recordStart;
                     }
 
 
@@ -153,9 +182,9 @@ public class SlideNumbering : MonoBehaviour
                 if (grandchildren[k].getSelected() == true)
                 {
 
-                    
-                        grandchildrenData[k].playAudio();
-                    
+
+                    grandchildrenData[k].playAudio();
+
 
 
                 }
@@ -177,9 +206,9 @@ public class SlideNumbering : MonoBehaviour
             {
                 if (grandchildren[k].getSelected() == true)
                 {
-                    
+
                     grandchildrenData[k].setPose(0, grandchildrenData[k].getGround());
-                    
+
                 }
 
             }
@@ -354,6 +383,64 @@ public class SlideNumbering : MonoBehaviour
 
             }
         }
+    }
+
+
+    public void charaLeft()
+    {
+
+    }
+
+    public void charaRight()
+    {
+
+    }
+
+    public void charaUp()
+    {
+
+    }
+
+    public void charaDown()
+    {
+
+    }
+
+    public void objectLeft()
+    {
+
+    }
+
+    public void objectRight()
+    {
+
+    }
+
+    public void objectMid()
+    {
+
+    }
+
+    private SlideData getSelectedData()
+    {
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
+            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+            for (int k = 0; k < grandchildren.Length; k++)
+            {
+                if (grandchildren[k].getSelected() == true)
+                {
+
+                    return grandchildrenData[k];
+
+                }
+                
+            }
+        }
+        return new SlideData();
     }
 
 }

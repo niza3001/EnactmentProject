@@ -26,6 +26,8 @@ TagManager:
   - all_slides
   - enactment_canvas
   - pose_button
+  - instructions
+  - back_button
   layers:
   - Default
   - TransparentFX
