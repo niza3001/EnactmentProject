@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114137966129123154}
   - component: {fileID: 114613639579907818}
   m_Layer: 0
-  m_Name: VolcanoBg
+  m_Name: TempleBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 691378649f708d14792c3beaa37f7326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconSprite: {fileID: 21300000, guid: 199e0c56ab3ab5a44a1e60d72489816a, type: 3}
+  iconSprite: {fileID: 21300000, guid: c821e4a8e25ba3c49a53a8b2bf14a318, type: 3}
 --- !u!114 &114613639579907818
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -64,4 +64,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b986b8f6c773a949a27bb29430143c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backdrop: {fileID: 21300000, guid: 504764280359fff40bc15520ef2c0165, type: 3}
+  backdrop: {fileID: 21300000, guid: 31095cdefddfd1d429d658fadf9ae85c, type: 3}

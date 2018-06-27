@@ -16,25 +16,96 @@ public class SlideNumbering : MonoBehaviour
     private bool isRecording = false;
     private bool donePlanning = false;
     private bool ready = false;
+    private int condition = 0; //0-bottom up, 1-hybrid, 2-top down
     // Use this for initialization
 
     public Sprite recordStop;
     public Sprite recordStart;
+    public Sprite blankSprite;
+
+    public GameObject playButton;
+    private Vector3 playPosition;
+
+
+    public GameObject selectionTrio;
+    private Vector3 trioPosition;
+
+    //Bottom Up
+    //private bool emptySlide = false;
+
+
+    //Top Down
 
     void Start()
     {
+        playButton = GameObject.FindGameObjectWithTag("play_screen");
+        playPosition = playButton.transform.position;
 
+        selectionTrio = GameObject.FindGameObjectWithTag("object_selection");
+        trioPosition = selectionTrio.transform.position;
+
+        //Set up Enactment Screen//
+        GameObject[] charaPosButtons = GameObject.FindGameObjectsWithTag("chara_position");
+        GameObject[] objPosButtons = GameObject.FindGameObjectsWithTag("obj_position");
+
+        foreach (GameObject button in charaPosButtons)
+        {
+            button.GetComponent<Button>().interactable = false;
+            button.GetComponent<Image>().color = new Color(1, 1, 1, 0);
+
+        }
+
+        foreach (GameObject button in objPosButtons)
+        {
+            button.GetComponent<Button>().interactable = false;
+            button.GetComponent<Image>().color = new Color(1,1,1,0);
+        }
+
+        GameObject.FindGameObjectWithTag("enactment_check").GetComponent<Button>().interactable=false;
+        GameObject.FindGameObjectWithTag("enactment_check").GetComponent<Image>().color = new Color(1,1,1,0);
+        //end of setting up Enactment Screen//
+
+
+        //Setting up Timeline for condition
+
+        //function here to get condition
+
+        switch (condition)
+        {
+            case 0:
+                //Bottom up- record button is visible but not yet active, planning button goes away, play story button is visible but disabled
+                GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = false;
+                GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false;
+                GameObject.FindGameObjectWithTag("planning_button").GetComponent<Button>().interactable = false;
+                GameObject.FindGameObjectWithTag("planning_button").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                GameObject.FindGameObjectWithTag("planning_button").transform.SetAsFirstSibling();
+                GameObject.FindGameObjectWithTag("instructions").GetComponent<Text>().text = "Create Your Story";
+
+                break;
+            case 1:
+                break;
+            case 2:
+                //Top down - record button and play story button goes away, planning button is visible but disabled
+                GameObject.FindGameObjectWithTag("planning_button").transform.SetAsLastSibling();
+                GameObject.FindGameObjectWithTag("planning_button").GetComponent<Button>().interactable = false;
+                GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = false;
+                GameObject.FindGameObjectWithTag("record_screen").GetComponent<Image>().color = new Color(1, 0, 0, 0);
+                GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false;
+                GameObject.FindGameObjectWithTag("play_screen").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                GameObject.FindGameObjectWithTag("play_screen").transform.position = new Vector3(5000,5000);
+                GameObject.FindGameObjectWithTag("instructions").GetComponent<Text>().text = "Plan Your Story";
+                break;
+            default:
+                break;
+
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        ready = true;
         int num = 1;
-        GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = false;
-
-        if (donePlanning == false) { GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = true; }
-
+       
         SlideArray[] arrays = GetComponentsInChildren<SlideArray>();
 
 
@@ -49,35 +120,212 @@ public class SlideNumbering : MonoBehaviour
                         grandchild.GetComponentInChildren<Text>().text = num.ToString();
                         num++;
                     }
-
-                    if (grandchild.GetComponentInChildren<SlideSelectSlide>().getSelected() && grandchild.GetComponentInChildren<SlideData>().isFilled())
-                    {
-                        GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = true;
-                    }
-
-                    if (grandchild.GetComponentInChildren<SlideData>().isFilled() != true || (arrays[0].getCurrent() > 0 && arrays[1].getCurrent() > 0 && arrays[2].getCurrent() > 0 == false))
-                    {
-                        if (ready == false) { GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false; }
-                        ready = false;
-                    }
                 }
             }
         }
 
+
+        GameObject[] addButtons = GameObject.FindGameObjectsWithTag("add_slide");
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+
+        SlideData[] begSlides = children[0].GetComponentsInChildren<SlideData>();
+        SlideData[] midSlides = children[1].GetComponentsInChildren<SlideData>();
+        SlideData[] endSlides = children[2].GetComponentsInChildren<SlideData>();
+
+        switch (condition)
+            {
+
+                case 0:
+                    
+
+                    if (!EmptySlide()) //no slides are empty
+                    {
+                        foreach (GameObject button in addButtons)
+                        {
+                            button.GetComponent<Button>().interactable = true;
+                        }
+
+                    SlideArray[] childrenSlides = GetComponentsInChildren<SlideArray>();
+
+                    for (int i = 0; i < childrenSlides.Length; i++)
+                    {
+                        SlideSelectSlide[] grandchildren = childrenSlides[i].GetComponentsInChildren<SlideSelectSlide>();
+
+                        for (int k = 0; k < grandchildren.Length; k++)
+                        {
+                            grandchildren[k].draggingOn();
+
+                        }
+                    }
+                }
+                    else
+                    {
+                        foreach (GameObject button in addButtons)
+                        {
+                            button.GetComponent<Button>().interactable = false;
+                        }
+
+                    SlideArray[] childrenSlides = GetComponentsInChildren<SlideArray>();
+
+                    for (int i = 0; i < childrenSlides.Length; i++)
+                    {
+                        SlideSelectSlide[] grandchildren = childrenSlides[i].GetComponentsInChildren<SlideSelectSlide>();
+
+                        for (int k = 0; k < grandchildren.Length; k++)
+                        {
+                            grandchildren[k].draggingOff();
+
+                        }
+                    }
+
+
+                }
+
+                    if (getSelectedStatus())
+                    {
+                        if (getSelectedData().isFilled())
+                        {
+                            GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = true;
+                        }
+                    }
+                    else { GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = false; }
+
+                    
+                    if (begSlides.Length > 0 && midSlides.Length > 0 && endSlides.Length > 0 && !EmptySlide() && titlesFilled())
+                    {
+                        GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = true;
+                    }
+                    else
+                    {
+                        GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false;
+                    }
+
+                    break;
+
+                case 1:
+                    
+
+                    break;
+                case 2:
+                    if (donePlanning)
+                    {
+                    GameObject.FindGameObjectWithTag("instructions").GetComponent<Text>().text = "Act Out Your Story";
+                    GameObject[] allTitles = GameObject.FindGameObjectsWithTag("title");
+
+                    foreach (GameObject title in allTitles)
+                        {
+                        title.GetComponent<InputField>().interactable = false;
+                        }
+
+
+                    foreach (GameObject button in addButtons)
+                            {
+                                button.GetComponent<Button>().interactable = false;
+                            }
+
+                        SlideArray[] childrenSlides = GetComponentsInChildren<SlideArray>();
+
+                        for (int i = 0; i < childrenSlides.Length; i++)
+                        {
+                            SlideSelectSlide[] grandchildren = childrenSlides[i].GetComponentsInChildren<SlideSelectSlide>();
+
+                            for (int k = 0; k < grandchildren.Length; k++)
+                            {
+                                grandchildren[k].draggingOff();
+
+                            }
+                        }
+
+                    //record button & play button come to life
+                    //planning button goes away
+                    GameObject.FindGameObjectWithTag("planning_button").transform.SetAsFirstSibling();
+                    GameObject.FindGameObjectWithTag("planning_button").GetComponent<Button>().interactable = false;
+                    GameObject.FindGameObjectWithTag("planning_button").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                    GameObject.FindGameObjectWithTag("record_screen").GetComponent<Image>().color = new Color(1, 0, 0, 1);
+                    GameObject.FindGameObjectWithTag("play_screen").GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+                    GameObject.FindGameObjectWithTag("play_screen").transform.position = playPosition;
+                    selectionTrio.transform.position = new Vector3(5000, 5000);
+
+
+                    if (getSelectedStatus())
+                    {
+                        GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = true;
+                    }
+                    else
+                    {
+                        GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = false;
+                    }
+
+                    
+                    if (begSlides.Length > 0 && midSlides.Length > 0 && endSlides.Length > 0 && !EmptySlide())
+                    {
+                        GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = true;
+                    }
+                    else
+                    {
+                        GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false;
+                    }
+                }
+
+                if (donePlanButtonReady()) { GameObject.FindGameObjectWithTag("planning_button").GetComponent<Button>().interactable = true; }
+                else { GameObject.FindGameObjectWithTag("planning_button").GetComponent<Button>().interactable = false; }
+                
+
+                break;
+
+                default:
+                    break;
+
+            }
+
+
+        
     }
 
 
-    public void donePlan()
+    public bool titlesFilled()
     {
-        if (ready == true)
-        {
-            GameObject.FindGameObjectWithTag("play_screen").SetActive(false);
+        GameObject[] allTitles = GameObject.FindGameObjectsWithTag("title");
 
-            GameObject.FindGameObjectWithTag("record_screen").GetComponent<Image>().color = new Color(1, 0, 0);
-            GameObject.FindGameObjectWithTag("instructions").GetComponent<Text>().text = "Create My Story";
-            //GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = true;
-            donePlanning = true;
+        foreach(GameObject title in allTitles)
+        {
+            if (title.GetComponent<InputField>().text == "") { return false; }
         }
+
+        return true;
+    }
+
+    public void donePlan()
+    {   
+        donePlanning = true;   
+    }
+
+    public bool donePlanButtonReady()
+    {
+
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+
+            if (grandchildrenData.Length==0) { return false; }
+
+            for (int k = 0; k < grandchildrenData.Length; k++)
+            {
+                if (grandchildrenData[k].isFilled()==false)
+                {
+                    return false;
+                }
+
+            }
+        }
+
+        if (titlesFilled() == false) { return false; }
+
+        return true;
+
     }
 
     //deselects all slides across all three arrays so only one slide is selected
@@ -131,38 +379,32 @@ public class SlideNumbering : MonoBehaviour
         GameObject playButton = GameObject.FindGameObjectWithTag("play_slide_button");
         GameObject backButton = GameObject.FindGameObjectWithTag("back_button");
         GameObject recordButton = GameObject.FindGameObjectWithTag("record_button");
+        GameObject[] poseButtons = GameObject.FindGameObjectsWithTag("pose_button");
 
-        SlideArray[] children = GetComponentsInChildren<SlideArray>();
-
-        for (int i = 0; i < children.Length; i++)
+        if (isRecording == false)
         {
-            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
-            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
-            for (int k = 0; k < grandchildren.Length; k++)
+            getSelectedData().startRecord();
+            isRecording = true;
+            playButton.GetComponent<Button>().interactable = false;
+            backButton.GetComponent<Button>().interactable = false;
+            recordButton.GetComponent<Image>().sprite = recordStop;
+            foreach (GameObject button in poseButtons)
             {
-                if (grandchildren[k].getSelected() == true)
-                {
+                button.GetComponent<Button>().interactable = false;
 
-
-                    if (isRecording == false)
-                    {
-                        grandchildrenData[k].startRecord();
-                        isRecording = true;
-                        playButton.GetComponent<Button>().interactable = false;
-                        backButton.GetComponent<Button>().interactable = false;
-                        recordButton.GetComponent<Image>().sprite = recordStop;
-                    }
-                    else
-                    {
-                        grandchildrenData[k].endRecord();
-                        isRecording = false;
-                        playButton.GetComponent<Button>().interactable = true;
-                        backButton.GetComponent<Button>().interactable = true;
-                        recordButton.GetComponent<Image>().sprite = recordStart;
-                    }
-
-
-                }
+            }
+        }
+        else
+        {
+            getSelectedData().endRecord();
+            getSelectedSlide().showRecordedStatus();
+            isRecording = false;
+            playButton.GetComponent<Button>().interactable = true;
+            backButton.GetComponent<Button>().interactable = true;
+            recordButton.GetComponent<Image>().sprite = recordStart;
+            foreach (GameObject button in poseButtons)
+            {
+                button.GetComponent<Button>().interactable = true;
 
             }
         }
@@ -171,254 +413,122 @@ public class SlideNumbering : MonoBehaviour
 
     public void playSelectedSlide()
     {
-        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+        getSelectedData().playAudio();
 
-        for (int i = 0; i < children.Length; i++)
-        {
-            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
-            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
-            for (int k = 0; k < grandchildren.Length; k++)
-            {
-                if (grandchildren[k].getSelected() == true)
-                {
-
-
-                    grandchildrenData[k].playAudio();
-
-
-
-                }
-
-            }
-        }
     }
 
 
     public void poseZero()
     {
-        SlideArray[] children = GetComponentsInChildren<SlideArray>();
 
-        for (int i = 0; i < children.Length; i++)
-        {
-            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
-            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
-            for (int k = 0; k < grandchildren.Length; k++)
-            {
-                if (grandchildren[k].getSelected() == true)
-                {
-
-                    grandchildrenData[k].setPose(0, grandchildrenData[k].getGround());
-
-                }
-
-            }
-        }
+        getSelectedData().setPose(0);
+        getSelectedData().updatePoseMode();
     }
 
     public void poseOne()
     {
-        SlideArray[] children = GetComponentsInChildren<SlideArray>();
-
-        for (int i = 0; i < children.Length; i++)
-        {
-            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
-            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
-            for (int k = 0; k < grandchildren.Length; k++)
-            {
-                if (grandchildren[k].getSelected() == true)
-                {
-
-                    grandchildrenData[k].setPose(1, grandchildrenData[k].getGround());
-
-                }
-
-            }
-        }
+        getSelectedData().setPose(1);
+        getSelectedData().updatePoseMode();
     }
 
     public void poseTwo()
     {
-        SlideArray[] children = GetComponentsInChildren<SlideArray>();
-
-        for (int i = 0; i < children.Length; i++)
-        {
-            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
-            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
-            for (int k = 0; k < grandchildren.Length; k++)
-            {
-                if (grandchildren[k].getSelected() == true)
-                {
-
-                    grandchildrenData[k].setPose(2, grandchildrenData[k].getGround());
-
-                }
-
-            }
-        }
+        getSelectedData().setPose(2);
+        getSelectedData().updatePoseMode();
     }
 
     public void poseThree()
     {
-        SlideArray[] children = GetComponentsInChildren<SlideArray>();
-
-        for (int i = 0; i < children.Length; i++)
-        {
-            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
-            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
-            for (int k = 0; k < grandchildren.Length; k++)
-            {
-                if (grandchildren[k].getSelected() == true)
-                {
-
-                    grandchildrenData[k].setPose(3, grandchildrenData[k].getGround());
-
-                }
-
-            }
-        }
+        getSelectedData().setPose(3);
+        getSelectedData().updatePoseMode();
     }
 
     public void poseFour()
     {
-        SlideArray[] children = GetComponentsInChildren<SlideArray>();
-
-        for (int i = 0; i < children.Length; i++)
-        {
-            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
-            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
-            for (int k = 0; k < grandchildren.Length; k++)
-            {
-                if (grandchildren[k].getSelected() == true)
-                {
-
-                    grandchildrenData[k].setPose(4, grandchildrenData[k].getGround());
-
-                }
-
-            }
-        }
+        getSelectedData().setPose(4);
+        getSelectedData().updatePoseMode();
     }
 
-    public void groundPose()
-    {
-        SlideArray[] children = GetComponentsInChildren<SlideArray>();
-
-        for (int i = 0; i < children.Length; i++)
-        {
-            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
-            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
-            for (int k = 0; k < grandchildren.Length; k++)
-            {
-                if (grandchildren[k].getSelected() == true)
-                {
-
-                    grandchildrenData[k].setPose(grandchildrenData[k].getPose(), true);
-
-                }
-
-            }
-        }
-
-
-    }
+   
 
     public void updateEnactmentPose()
     {
-        SlideArray[] children = GetComponentsInChildren<SlideArray>();
-
-        for (int i = 0; i < children.Length; i++)
-        {
-            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
-            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
-            for (int k = 0; k < grandchildren.Length; k++)
-            {
-                if (grandchildren[k].getSelected() == true)
-                {
-
-                    grandchildrenData[k].updateCharaPose();
-
-                }
-
-            }
-        }
+        getSelectedData().updateCharaPose(true);
+       
     }
 
     public void updateEnactmentObjects()
     {
-        SlideArray[] children = GetComponentsInChildren<SlideArray>();
-
-        for (int i = 0; i < children.Length; i++)
-        {
-            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
-            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
-            for (int k = 0; k < grandchildren.Length; k++)
-            {
-                if (grandchildren[k].getSelected() == true)
-                {
-
-                    grandchildrenData[k].updateEnactmentScreen();
-
-                }
-
-            }
-        }
+        getSelectedData().updateEnactmentScreen();
+      
     }
 
-    public void handheldObjects()
+    public void enactmentCheck()
     {
-        SlideArray[] children = GetComponentsInChildren<SlideArray>();
-
-        for (int i = 0; i < children.Length; i++)
-        {
-            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
-            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
-            for (int k = 0; k < grandchildren.Length; k++)
-            {
-                if (grandchildren[k].getSelected() == true)
-                {
-
-                    grandchildrenData[k].setPose(grandchildrenData[k].getPose(), false);
-
-                }
-
-            }
-        }
+        getSelectedData().updatePoseMode();
     }
 
+ /*   public void handheldObjects()
+    {
+        getSelectedData().setPose(getSelectedData().getPose(), false);
+        
+    }
+    */
 
     public void charaLeft()
     {
-
+        getSelectedData().setCharaPos(0);
+        getSelectedData().updateCharaPos(true);
+        //getSelectedData().updatePoseMode();
     }
 
     public void charaRight()
     {
-
+        getSelectedData().setCharaPos(1);
+        getSelectedData().updateCharaPos(true);
+        //getSelectedData().updatePoseMode();
     }
 
     public void charaUp()
     {
-
+        getSelectedData().setCharaPos(2);
+        getSelectedData().updateCharaPos(true);
+        //getSelectedData().updatePoseMode();
     }
 
     public void charaDown()
     {
-
+        getSelectedData().setCharaPos(3);
+        getSelectedData().updateCharaPos(true);
+        //getSelectedData().updatePoseMode();
     }
 
     public void objectLeft()
     {
-
+        getSelectedData().setObjectPos(0);
+        getSelectedData().updateItemPos(true);
+        //getSelectedData().updatePoseMode();
     }
 
     public void objectRight()
     {
-
+        getSelectedData().setObjectPos(1);
+        getSelectedData().updateItemPos(true);
+        //getSelectedData().updatePoseMode();
     }
 
-    public void objectMid()
+    public void objectUp()
     {
+        getSelectedData().setObjectPos(2);
+        getSelectedData().updateItemPos(true);
+        //getSelectedData().updatePoseMode();
+    }
 
+    public void objectDown()
+    {
+        getSelectedData().setObjectPos(3);
+        getSelectedData().updateItemPos(true);
+        //getSelectedData().updatePoseMode();
     }
 
     private SlideData getSelectedData()
@@ -441,6 +551,235 @@ public class SlideNumbering : MonoBehaviour
             }
         }
         return new SlideData();
+    }
+
+    private SlideSelectSlide getSelectedSlide()
+    {
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
+            //SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+            for (int k = 0; k < grandchildren.Length; k++)
+            {
+                if (grandchildren[k].getSelected() == true)
+                {
+
+                    return grandchildren[k];
+
+                }
+
+            }
+        }
+        return new SlideSelectSlide();
+    }
+
+    private bool getSelectedStatus()
+    {
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
+
+            for (int k = 0; k < grandchildren.Length; k++)
+            {
+                if (grandchildren[k].getSelected() == true)
+                {
+
+                    return true;
+
+                }
+
+            }
+        }
+        return false;
+    }
+
+
+    public void setTitle()
+    {
+        GameObject[] currents;
+
+        currents = GameObject.FindGameObjectsWithTag("current_item");
+
+        foreach (GameObject current in currents)
+        {
+            Destroy(current);
+        }
+
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = blankSprite;
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(.596f, .824f, .894f, 1);
+        GameObject.Find("PlayCharacter").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+        GameObject.Find("PlayTitle").GetComponent<Text>().text = GameObject.FindGameObjectWithTag("main_title").GetComponent<Text>().text;
+        GameObject.Find("PlayTitle").GetComponent<Text>().color = new Color(0, 0, 0, 1);
+
+    }
+
+
+    public IEnumerator SequenceTiming()
+      {
+          SlideArray[] sections = GetComponentsInChildren<SlideArray>();
+
+          SlideData[] beginning = sections[0].GetComponentsInChildren<SlideData>();
+          SlideData[] middle = sections[1].GetComponentsInChildren<SlideData>();
+          SlideData[] end = sections[2].GetComponentsInChildren<SlideData>();
+
+        float wait = 3.0f;
+
+        GameObject.Find("PlayWindow").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+
+        GameObject.Find("PlayInstruction").GetComponent<Text>().color = new Color(0, 0, 0, 0);
+        GameObject.FindGameObjectWithTag("play_story_button").GetComponent<Button>().interactable = false;
+        GameObject.FindGameObjectWithTag("playscreen_back_button").GetComponent<Button>().interactable = false;
+        GameObject.FindGameObjectWithTag("play_story_button").GetComponent<Image>().color = new Color(1,1,1,0);
+        GameObject.FindGameObjectWithTag("playscreen_back_button").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+
+        yield return new WaitForSeconds(wait); //pause for title
+
+        GameObject.Find("PlayTitle").GetComponent<Text>().text = GameObject.FindGameObjectWithTag("beg_title").GetComponent<Text>().text;
+
+        yield return new WaitForSeconds(wait);
+
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+        GameObject.Find("PlayTitle").GetComponent<Text>().color = new Color(0, 0, 0, 0);
+        GameObject.Find("PlayCharacter").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+
+        for (int i = 0; i < beginning.Length; i++)
+          {
+            wait = beginning[i].getTime();
+            
+            beginning[i].updatePlayScreen();
+            beginning[i].playAudio();
+            yield return new WaitForSeconds(wait);
+        }
+
+
+        GameObject[] currents;
+
+        currents = GameObject.FindGameObjectsWithTag("current_item");
+
+        foreach (GameObject current in currents)
+        {
+            Destroy(current);
+        }
+
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = blankSprite;
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(.596f, .824f, .894f, 1);
+
+        GameObject.Find("PlayCharacter").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+        GameObject.Find("PlayTitle").GetComponent<Text>().text = GameObject.FindGameObjectWithTag("mid_title").GetComponent<Text>().text;
+        GameObject.Find("PlayTitle").GetComponent<Text>().color = new Color(0, 0, 0, 1);
+        yield return new WaitForSeconds(3.0f);
+
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+        GameObject.Find("PlayTitle").GetComponent<Text>().color = new Color(0, 0, 0, 0);
+        GameObject.Find("PlayCharacter").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+
+        for (int i = 0; i < middle.Length; i++)
+          {
+            wait = middle[i].getTime();
+            
+            middle[i].updatePlayScreen();
+            middle[i].playAudio();
+            yield return new WaitForSeconds(wait);
+        }
+
+
+        currents = GameObject.FindGameObjectsWithTag("current_item");
+
+        foreach (GameObject current in currents)
+        {
+            Destroy(current);
+        }
+
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = blankSprite;
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(.596f, .824f, .894f, 1);
+
+        GameObject.Find("PlayCharacter").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+        GameObject.Find("PlayTitle").GetComponent<Text>().text = GameObject.FindGameObjectWithTag("end_title").GetComponent<Text>().text;
+        GameObject.Find("PlayTitle").GetComponent<Text>().color = new Color(0, 0, 0, 1);
+
+        yield return new WaitForSeconds(3.0f);
+
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+        GameObject.Find("PlayTitle").GetComponent<Text>().color = new Color(0, 0, 0, 0);
+        GameObject.Find("PlayCharacter").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+
+        for (int i = 0; i < end.Length; i++)
+          {
+            wait = end[i].getTime();
+            
+            end[i].updatePlayScreen();
+            end[i].playAudio();
+            yield return new WaitForSeconds(wait);
+        }
+
+
+
+        currents = GameObject.FindGameObjectsWithTag("current_item");
+
+        foreach (GameObject current in currents)
+        {
+            Destroy(current);
+        }
+
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = blankSprite;
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(.596f, .824f, .894f, 1);
+
+        GameObject.Find("PlayCharacter").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+        GameObject.Find("PlayTitle").GetComponent<Text>().text = "The End";
+        GameObject.Find("PlayTitle").GetComponent<Text>().color = new Color(0, 0, 0, 1);
+
+        yield return new WaitForSeconds(3.0f);
+
+        GameObject.Find("PlayWindow").GetComponent<Image>().color = new Color(1, 1, 1, .7098f);
+        setTitle();
+
+        GameObject.Find("PlayInstruction").GetComponent<Text>().color = new Color(0, 0, 0, 1);
+        GameObject.FindGameObjectWithTag("play_story_button").GetComponent<Button>().interactable = true;
+        GameObject.FindGameObjectWithTag("playscreen_back_button").GetComponent<Button>().interactable = true;
+        GameObject.FindGameObjectWithTag("play_story_button").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        GameObject.FindGameObjectWithTag("playscreen_back_button").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+    }
+
+
+    /* public IEnumerator TestingCoRoutine()
+     {
+         yield return new WaitForSeconds(3.0f);
+         Debug.Log("3 have passed");
+         yield return new WaitForSeconds(4.0f);
+         Debug.Log("Done");
+
+     }*/
+
+    public void PlayThrough()
+    {
+        StopAllCoroutines();
+        StartCoroutine(SequenceTiming());
+    }
+
+    private bool EmptySlide()
+    {
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+
+            for (int k = 0; k < grandchildrenData.Length; k++)
+            {
+                if (grandchildrenData[k].isSlideEmpty() == true)
+                {
+                    return true;
+                }
+
+            }
+        }
+
+        return false;
+        
     }
 
 }

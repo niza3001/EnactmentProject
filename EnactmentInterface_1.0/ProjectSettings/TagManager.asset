@@ -28,6 +28,22 @@ TagManager:
   - pose_button
   - instructions
   - back_button
+  - chara_position
+  - obj_position
+  - enactment_check
+  - enactment_text
+  - playscreen_back_button
+  - play_story_button
+  - play_instruction
+  - play_title
+  - main_title
+  - beg_title
+  - mid_title
+  - end_title
+  - planning_button
+  - add_slide
+  - title
+  - object_selection
   layers:
   - Default
   - TransparentFX

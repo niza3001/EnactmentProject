@@ -61,6 +61,8 @@ MonoBehaviour:
   border: {fileID: 1062358405881274, guid: a9da35a339f918744b9a124f734a4689, type: 2}
   addSlideRight: {fileID: 21300000, guid: ce15ba0172d4ab440b1b4bf997b6be9c, type: 3}
   selectBorder: {fileID: 21300000, guid: bfeef12e054e1a146b1477f2153a153d, type: 3}
+  slideRecordIcon: {fileID: 1018751244815074, guid: b75438781e3590d4cb30ca2c6912b970,
+    type: 2}
 --- !u!114 &114664673433106666
 MonoBehaviour:
   m_ObjectHideFlags: 1

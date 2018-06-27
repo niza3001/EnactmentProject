@@ -11,8 +11,12 @@ public class CanvasManagerBottomUp : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        enableCanvas(timelineCanvas);
+        disableCanvas(playCanvas);
+        disableCanvas(enactmentCanvas);
+
+        whichCanvas = 0;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -36,6 +40,7 @@ public class CanvasManagerBottomUp : MonoBehaviour {
         enableCanvas(timelineCanvas);
         disableCanvas(playCanvas);
         disableCanvas(enactmentCanvas);
+        StopAllCoroutines();
 
         whichCanvas = 0;
     }

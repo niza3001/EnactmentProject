@@ -24,6 +24,9 @@ public class SlideSelectSlide : MonoBehaviour, IPointerClickHandler, IBeginDragH
     public GameObject border;
     public Sprite addSlideRight;
     public Sprite selectBorder;
+
+    public GameObject slideRecordIcon;
+
     private Sprite borderSprite;
     private string borderName;
 
@@ -40,6 +43,8 @@ public class SlideSelectSlide : MonoBehaviour, IPointerClickHandler, IBeginDragH
     private bool selected = false; //whether slide is selected or not
     private bool movingHover = false; //being hovered over while another slide from same array is being dragged
     private bool moving = false; //being dragged
+
+    private bool draggingEnabled = true;
 
     // Use this for initialization
     void Start()
@@ -67,6 +72,11 @@ public class SlideSelectSlide : MonoBehaviour, IPointerClickHandler, IBeginDragH
         newBorder.transform.localPosition = new Vector3(0, 0, 0);
 
         borderSprite = newBorder.GetComponent<Image>().sprite;
+
+        GameObject newRecordIcon = (GameObject)Instantiate(slideRecordIcon, GetComponentInParent<Canvas>().transform);
+        newRecordIcon.transform.SetParent(this.transform);
+        newRecordIcon.transform.localPosition = new Vector3(0, -75, 0);
+        newRecordIcon.GetComponent<Image>().color = new Color(1, 1, 1, 0);
 
         GameObject newNumber = (GameObject)Instantiate(numberText, GetComponentInParent<Canvas>().transform);
         newNumber.transform.SetParent(this.transform);
@@ -225,51 +235,69 @@ public class SlideSelectSlide : MonoBehaviour, IPointerClickHandler, IBeginDragH
     //begin dragging slide
     public void OnBeginDrag(PointerEventData eventData)
     {
-        this.GetComponentInParent<SlideArray>().setSlideMoving(true, listID);
-        moving = true;
+        if (draggingEnabled)
+        {
+            this.GetComponentInParent<SlideArray>().setSlideMoving(true, listID);
+            moving = true;
 
-        //record current position in heirarchy so it can be returned to it later
-        oldPlace = this.transform.position;
-        oldIndex = transform.GetSiblingIndex();
-        oldParent = this.GetComponentInParent<SlideArray>().transform;
+            //record current position in heirarchy so it can be returned to it later
+            oldPlace = this.transform.position;
+            oldIndex = transform.GetSiblingIndex();
+            oldParent = this.GetComponentInParent<SlideArray>().transform;
 
-        //take slide out of heirarchy so it doesn't get covered by other objects while being dragged
-        transform.SetParent(this.GetComponentInParent<SlideArray>().GetComponentInParent<Canvas>().transform);
+            //take slide out of heirarchy so it doesn't get covered by other objects while being dragged
+            transform.SetParent(this.GetComponentInParent<SlideArray>().GetComponentInParent<Canvas>().transform);
 
-        //takes away slide number while its being dragged to avoid confusion
-        this.GetComponentInChildren<Text>().text = "";
+            //takes away slide number while its being dragged to avoid confusion
+            this.GetComponentInChildren<Text>().text = "";
 
-        //offsets slide from mouse so the slide it hovers over can detect when the mouse enters it
-        transform.position = new Vector3(eventData.position.x, eventData.position.y - 65, transform.position.z);
+            //offsets slide from mouse so the slide it hovers over can detect when the mouse enters it
+            transform.position = new Vector3(eventData.position.x, eventData.position.y - 65, transform.position.z);
+        }
     }
 
+    public void draggingOff()
+    {
+        draggingEnabled = false;
+    }
+
+    public void draggingOn()
+    {
+        draggingEnabled = true;
+    }
 
     //update slide position
     public void OnDrag(PointerEventData eventData)
     {
-        this.transform.Translate(eventData.delta);
+        if (draggingEnabled)
+        {
+            this.transform.Translate(eventData.delta);
+        }
     }
 
 
     //once mouse is released after dragging slide
     public void OnEndDrag(PointerEventData eventData)
     {
-        //put slide back in its place in the heirarchy
-        this.transform.position = oldPlace;
-        transform.SetParent(oldParent);
-        transform.SetSiblingIndex(oldIndex);
-
-        //if a slide was hovered over in the same array, call the slide swapping function
-        if (GetComponentInParent<SlideArray>().getSlideMoving() == true && GetComponentInParent<SlideArray>().getSlideMovingHover() == true && movingHover == false)
+        if (draggingEnabled)
         {
-            this.GetComponentInParent<SlideArray>().renumberSlidesSwap();
+            //put slide back in its place in the heirarchy
+            this.transform.position = oldPlace;
+            transform.SetParent(oldParent);
+            transform.SetSiblingIndex(oldIndex);
+
+            //if a slide was hovered over in the same array, call the slide swapping function
+            if (GetComponentInParent<SlideArray>().getSlideMoving() == true && GetComponentInParent<SlideArray>().getSlideMovingHover() == true && movingHover == false)
+            {
+                this.GetComponentInParent<SlideArray>().renumberSlidesSwap();
+            }
+
+            //reset booleans for slide moving and slide being hovered over for this slide's array
+            this.GetComponentInParent<SlideArray>().setSlideMoving(false, listID);
+            this.GetComponentInParent<SlideArray>().setSlideMovingHover(false, listID);
+
+            moving = false;
         }
-
-        //reset booleans for slide moving and slide being hovered over for this slide's array
-        this.GetComponentInParent<SlideArray>().setSlideMoving(false, listID);
-        this.GetComponentInParent<SlideArray>().setSlideMovingHover(false, listID);
-
-        moving = false;
     }
 
 
@@ -307,5 +335,8 @@ public class SlideSelectSlide : MonoBehaviour, IPointerClickHandler, IBeginDragH
 
     }
 
-
+    public void showRecordedStatus()
+    {
+        this.transform.Find("SlideRecorded(Clone)").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+    }
 }
