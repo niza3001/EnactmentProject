@@ -166,7 +166,7 @@ public class SlideSelectSlide : MonoBehaviour, IPointerClickHandler, IBeginDragH
 
         //change to select border
         this.transform.Find(borderName).GetComponent<Image>().sprite = selectBorder;
-
+        this.transform.Find(borderName).GetComponent<RectTransform>().sizeDelta = new Vector2(117.419f,75.161f);
 
         int whichSection = 0;
 
@@ -207,6 +207,8 @@ public class SlideSelectSlide : MonoBehaviour, IPointerClickHandler, IBeginDragH
 
         //change back to regular border
         this.transform.Find(borderName).GetComponent<Image>().sprite = borderSprite;
+        this.transform.Find(borderName).GetComponent<RectTransform>().sizeDelta = new Vector2(100.00f,56.25f);
+
     }
 
 

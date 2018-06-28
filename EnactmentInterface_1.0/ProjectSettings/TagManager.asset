@@ -44,6 +44,8 @@ TagManager:
   - add_slide
   - title
   - object_selection
+  - all_canvases
+  - trash
   layers:
   - Default
   - TransparentFX

@@ -16,16 +16,19 @@ public class SlideNumbering : MonoBehaviour
     private bool isRecording = false;
     private bool donePlanning = false;
     private bool ready = false;
-    private int condition = 0; //0-bottom up, 1-hybrid, 2-top down
+    private int condition = 2; //0-bottom up, 1-hybrid, 2-top down
     // Use this for initialization
 
     public Sprite recordStop;
     public Sprite recordStart;
     public Sprite blankSprite;
+    //public Sprite playStop;
+
+    private Sprite playSprite;
 
     public GameObject playButton;
     private Vector3 playPosition;
-
+    
 
     public GameObject selectionTrio;
     private Vector3 trioPosition;
@@ -38,6 +41,9 @@ public class SlideNumbering : MonoBehaviour
 
     void Start()
     {
+        
+        playSprite = GameObject.FindGameObjectWithTag("play_slide_button").GetComponent<Image>().sprite;
+
         playButton = GameObject.FindGameObjectWithTag("play_screen");
         playPosition = playButton.transform.position;
 
@@ -104,8 +110,16 @@ public class SlideNumbering : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (getSelectedStatus()&&getSelectedData().isFilled())
+        {
+            getSelectedData().UpdatePlayRecordButton();
+        }
+        
+
+
         int num = 1;
-       
+        
+
         SlideArray[] arrays = GetComponentsInChildren<SlideArray>();
 
 
@@ -298,7 +312,8 @@ public class SlideNumbering : MonoBehaviour
 
     public void donePlan()
     {   
-        donePlanning = true;   
+        donePlanning = true;
+        GameObject.FindGameObjectWithTag("trash").GetComponent<Button>().interactable = false;
     }
 
     public bool donePlanButtonReady()
@@ -636,6 +651,11 @@ public class SlideNumbering : MonoBehaviour
         GameObject.FindGameObjectWithTag("play_story_button").GetComponent<Image>().color = new Color(1,1,1,0);
         GameObject.FindGameObjectWithTag("playscreen_back_button").GetComponent<Image>().color = new Color(1, 1, 1, 0);
 
+
+        //Start Recording
+        GameObject.Find("Recorder").GetComponent<Animator>().StartRecording(24*60*5);
+
+
         yield return new WaitForSeconds(wait); //pause for title
 
         GameObject.Find("PlayTitle").GetComponent<Text>().text = GameObject.FindGameObjectWithTag("beg_title").GetComponent<Text>().text;
@@ -733,6 +753,11 @@ public class SlideNumbering : MonoBehaviour
         GameObject.Find("PlayTitle").GetComponent<Text>().color = new Color(0, 0, 0, 1);
 
         yield return new WaitForSeconds(3.0f);
+
+
+        //Stop Recording
+        GameObject.Find("Recorder").GetComponent<Animator>().StopRecording();
+
 
         GameObject.Find("PlayWindow").GetComponent<Image>().color = new Color(1, 1, 1, .7098f);
         setTitle();

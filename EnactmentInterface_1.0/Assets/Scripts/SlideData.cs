@@ -18,7 +18,7 @@ public class SlideData : MonoBehaviour {
     private bool isBackdrop = false;
     private bool useGround = false;
     private bool isRecord = false;
-
+    private bool isRecording = false;
     private int charaPosition = 3;
     private int objectPosition = 3;
 
@@ -26,27 +26,159 @@ public class SlideData : MonoBehaviour {
     private float audioTime = 0.0f;
 
     private int poseMode = 0;
+
+    public Sprite recordStop;
+    public Sprite playSprite;
     //0=default, 1=charaposition, 2=objectposition
 
 	// Use this for initialization
 	void Start () {
         slideAudio = gameObject.AddComponent<AudioSource>();
         slideClip = new AudioClip();
+
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update () {
+       
+
+
+    }
+
+    public void UpdatePlayRecordButton()
+    {
+        GameObject[] poseButtons = GameObject.FindGameObjectsWithTag("pose_button");
+        GameObject[] charaPosButtons = GameObject.FindGameObjectsWithTag("chara_position");
+        GameObject[] objPosButtons = GameObject.FindGameObjectsWithTag("obj_position");
+
+        GameObject playButton = GameObject.FindGameObjectWithTag("play_slide_button");
+        GameObject backButton = GameObject.FindGameObjectWithTag("back_button");
+        GameObject recordButton = GameObject.FindGameObjectWithTag("record_button");
+
+        switch (poseMode)
+        {
+            case 1:
+                
+                playButton.GetComponent<Button>().interactable = false;
+                backButton.GetComponent<Button>().interactable = false;
+                recordButton.GetComponent<Button>().interactable = false;
+
+                foreach (GameObject button in poseButtons)
+                {
+                    button.GetComponent<Button>().interactable = false;
+
+                }
+                foreach (GameObject button in charaPosButtons)
+                {
+                    button.GetComponent<Button>().interactable = true;
+                    button.GetComponent<Image>().color = new Color(1, 1, 1, .75f);
+                    button.transform.SetAsLastSibling();
+                }
+                foreach (GameObject button in objPosButtons)
+                {
+                    //button.transform.SetSiblingIndex(0);
+                    button.GetComponent<Button>().interactable = false;
+                    button.GetComponent<Image>().color = new Color(1, 1, 1, 0);
+
+                }
+                GameObject.FindGameObjectWithTag("enactment_check").GetComponent<Button>().interactable = true;
+                GameObject.FindGameObjectWithTag("enactment_check").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                GameObject.FindGameObjectWithTag("back_button").GetComponent<Button>().interactable = false;
+
+                setCharaPos(charaPosition);
+                break;
+            case 2:
+                
+                foreach (GameObject button in charaPosButtons)
+                {
+                    button.GetComponent<Button>().interactable = false;
+                    button.GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                    //button.transform.SetSiblingIndex(0);
+                }
+                foreach (GameObject button in objPosButtons)
+                {
+                    button.GetComponent<Button>().interactable = true;
+                    button.GetComponent<Image>().color = new Color(1, 1, 1, .75f);
+                    button.transform.SetAsLastSibling();
+                }
+                setObjectPos(objectPosition);
+                break;
+            case 0:
+                foreach (GameObject button in objPosButtons)
+                {
+                    button.GetComponent<Button>().interactable = false;
+                    button.GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                }
+                foreach (GameObject button in charaPosButtons)
+                {
+                    button.GetComponent<Button>().interactable = false;
+                    button.GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                    //button.transform.SetSiblingIndex(0);
+                }
+                GameObject.FindGameObjectWithTag("enactment_check").GetComponent<Button>().interactable = false;
+                GameObject.FindGameObjectWithTag("enactment_check").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                if (!isRecording && !slideAudio.isPlaying)
+                {
+                    
+                    foreach (GameObject button in poseButtons)
+                    {
+                        button.GetComponent<Button>().interactable = true;
+                    }
+                    
+                    GameObject.FindGameObjectWithTag("back_button").GetComponent<Button>().interactable = true;
+                    
+                    recordButton.GetComponent<Button>().interactable = true;
+
+                    if (isRecord) { playButton.GetComponent<Button>().interactable = true;}
+                    else { playButton.GetComponent<Button>().interactable = false; }
+                    playButton.GetComponent<Image>().sprite = playSprite;
+                    playButton.GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+                }
+                else if (isRecording)
+                {
+                    foreach (GameObject button in poseButtons)
+                    {
+                        button.GetComponent<Button>().interactable = false;
+                    }
+                    GameObject.FindGameObjectWithTag("back_button").GetComponent<Button>().interactable = false;
+                    playButton.GetComponent<Button>().interactable = false;
+                    recordButton.GetComponent<Button>().interactable = true;
+                    playButton.GetComponent<Image>().sprite = playSprite;
+                    playButton.GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+                }
+                else if (slideAudio.isPlaying)
+                {
+                    foreach (GameObject button in poseButtons)
+                    {
+                        button.GetComponent<Button>().interactable = false;
+                    }
+                    GameObject.FindGameObjectWithTag("back_button").GetComponent<Button>().interactable = false;
+                    playButton.GetComponent<Button>().interactable = true;
+                    recordButton.GetComponent<Button>().interactable = false;
+                    playButton.GetComponent<Image>().sprite = recordStop;
+                    playButton.GetComponent<Image>().color = new Color(1, 0, 0, 1);
+                }
+                
+                break;
+
+            default:
+                break;
+
+
+        }
+    }
 
     public void startRecord()
     {
+        
         slideAudio.clip = Microphone.Start(null, true, 600, 44100);
         Debug.Log("We have started");
+        isRecording = true;
     }
 
     public void endRecord()
     {
+        isRecording = false;
         int timeCut = Microphone.GetPosition(null);
         Microphone.End(null);
 
@@ -81,88 +213,60 @@ public class SlideData : MonoBehaviour {
         return slideAudio.clip.length + .5f ;
     }
 
+    public bool getIsRecord()
+    {
+        return isRecord;
+    }
+
     public void playAudio()
     {
+        
+
         if (slideAudio.clip != null) {
             //Debug.Log("well something is playing");
-            slideAudio.Play();
+
+            if (slideAudio.isPlaying==false) {
+                slideAudio.Play();
+
+                
+            }
+            else
+            {
+                slideAudio.Stop();
+                
+            }
            
         }
     }
 
+    public bool isSlideAudioPlaying()
+    {
+        if (slideAudio.clip != null)
+        {
+            if (slideAudio.isPlaying == true) {
+                return true;
+            }
+            else { return false; }
+        }
+        return false;
+    }
 
     public void updatePoseMode()
     {
-        GameObject[] poseButtons = GameObject.FindGameObjectsWithTag("pose_button");
-        GameObject[] charaPosButtons = GameObject.FindGameObjectsWithTag("chara_position");
-        GameObject[] objPosButtons = GameObject.FindGameObjectsWithTag("obj_position");
-
-        GameObject playButton = GameObject.FindGameObjectWithTag("play_slide_button");
-        GameObject backButton = GameObject.FindGameObjectWithTag("back_button");
-        GameObject recordButton = GameObject.FindGameObjectWithTag("record_button");
-
+       
         switch (poseMode)
         {
             case 0:
                 poseMode = 1;
-                playButton.GetComponent<Button>().interactable = false;
-                backButton.GetComponent<Button>().interactable = false;
-                recordButton.GetComponent<Button>().interactable = false;
-
-                foreach (GameObject button in poseButtons)
-                {
-                    button.GetComponent<Button>().interactable = false;
-                    
-                }
-                foreach (GameObject button in charaPosButtons)
-                {
-                    button.GetComponent<Button>().interactable = true;
-                    button.GetComponent<Image>().color = new Color(1, 1, 1, .75f);
-                    button.transform.SetAsLastSibling();
-                }
-                foreach (GameObject button in objPosButtons)
-                {
-                    //button.transform.SetSiblingIndex(0);
-
-                }
-                GameObject.FindGameObjectWithTag("enactment_check").GetComponent<Button>().interactable = true;
-                GameObject.FindGameObjectWithTag("enactment_check").GetComponent<Image>().color = new Color(1, 1, 1, 1);
-                GameObject.FindGameObjectWithTag("back_button").GetComponent<Button>().interactable = false;
                 
-                setCharaPos(charaPosition);
                 break;
             case 1:
                 poseMode = 2;
-                foreach (GameObject button in charaPosButtons)
-                {
-                    button.GetComponent<Button>().interactable = false;
-                    button.GetComponent<Image>().color = new Color(1, 1, 1, 0);
-                    //button.transform.SetSiblingIndex(0);
-                }
-                foreach (GameObject button in objPosButtons)
-                {
-                    button.GetComponent<Button>().interactable = true;
-                    button.GetComponent<Image>().color = new Color(1, 1, 1, .75f);
-                    button.transform.SetAsLastSibling();
-                }
-                setObjectPos(objectPosition);
+               
                 break;
             case 2:
                 poseMode = 0;
-                foreach (GameObject button in objPosButtons)
-                {
-                    button.GetComponent<Button>().interactable = false;
-                    button.GetComponent<Image>().color = new Color(1, 1, 1, 0);
-                }
-                foreach (GameObject button in poseButtons)
-                {
-                    button.GetComponent<Button>().interactable = true;
-                }
-                GameObject.FindGameObjectWithTag("enactment_check").GetComponent<Button>().interactable = false;
-                GameObject.FindGameObjectWithTag("enactment_check").GetComponent<Image>().color = new Color(1, 1, 1, 0);
-                GameObject.FindGameObjectWithTag("back_button").GetComponent<Button>().interactable = true;
-                playButton.GetComponent<Button>().interactable = true;
-                recordButton.GetComponent<Button>().interactable = true;
+                
                 break;
 
             default:

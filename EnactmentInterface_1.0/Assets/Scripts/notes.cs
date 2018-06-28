@@ -51,3 +51,64 @@ public class notes : MonoBehaviour {
                 }
             }
         }*/
+
+/*
+GameObject[] poseButtons = GameObject.FindGameObjectsWithTag("pose_button");
+
+    GameObject playButton = GameObject.FindGameObjectWithTag("play_slide_button");
+    GameObject backButton = GameObject.FindGameObjectWithTag("back_button");
+    GameObject recordButton = GameObject.FindGameObjectWithTag("record_button");
+
+    if (getSelectedStatus() == true && getSelectedData().isFilled() == true)
+    {
+        if (getSelectedData().getIsRecord())
+        {
+            playButton.transform.position = playButtonPosition;
+
+        }
+        else
+        {
+            playButton.transform.position = new Vector3(5000, 5000);
+        }
+
+
+        if (getSelectedData().isSlideAudioPlaying() == true)
+        {
+            playButton.GetComponent<Image>().sprite = recordStop;
+            playButton.GetComponent<Image>().color = new Color(1, 0, 0, 1);
+
+            foreach (GameObject button in poseButtons)
+            {
+                button.GetComponent<Button>().interactable = false;
+
+            }
+            backButton.GetComponent<Button>().interactable = false;
+            recordButton.GetComponent<Button>().interactable = false;
+
+        }
+        else if (getSelectedData().isSlideAudioPlaying() == false && getSelectedData().getPoseMode() == 0)
+        {
+            playButton.GetComponent<Image>().sprite = playSprite;
+            playButton.GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+
+            foreach (GameObject button in poseButtons)
+            {
+                button.GetComponent<Button>().interactable = true;
+
+            }
+            backButton.GetComponent<Button>().interactable = true;
+            recordButton.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            playButton.GetComponent<Image>().sprite = playSprite;
+            playButton.GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+            playButton.GetComponent<Button>().interactable = false;
+
+            backButton.GetComponent<Button>().interactable = false;
+            recordButton.GetComponent<Button>().interactable = false;
+        }
+
+    }
+
+    */

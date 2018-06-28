@@ -69,4 +69,9 @@ public class CanvasManagerBottomUp : MonoBehaviour {
         can.GetComponent<CanvasGroup>().blocksRaycasts = true;
         can.transform.SetAsLastSibling();
     }
+
+    public int getWhichCanvas()
+    {
+        return whichCanvas;
+    }
 }
