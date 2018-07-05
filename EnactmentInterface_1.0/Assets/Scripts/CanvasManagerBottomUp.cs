@@ -8,6 +8,7 @@ public class CanvasManagerBottomUp : MonoBehaviour {
     public Canvas timelineCanvas;
     public Canvas playCanvas;
     private int whichCanvas = 0; // 0 - timeline, 1 - enactment, 2 - play
+    
 
 	// Use this for initialization
 	void Start () {
@@ -26,7 +27,7 @@ public class CanvasManagerBottomUp : MonoBehaviour {
     //Go to enactment canvas
     public void toEnactment()
     {
-       
+        
         disableCanvas(timelineCanvas);
         disableCanvas(playCanvas);
         enableCanvas(enactmentCanvas);

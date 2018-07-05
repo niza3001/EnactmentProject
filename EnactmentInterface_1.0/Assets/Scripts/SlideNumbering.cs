@@ -16,7 +16,7 @@ public class SlideNumbering : MonoBehaviour
     private bool isRecording = false;
     private bool donePlanning = false;
     private bool ready = false;
-    private int condition = 2; //0-bottom up, 1-hybrid, 2-top down
+    private int condition = 0; //0-bottom up, 1-hybrid, 2-top down
     // Use this for initialization
 
     public Sprite recordStop;
@@ -26,12 +26,24 @@ public class SlideNumbering : MonoBehaviour
 
     private Sprite playSprite;
 
-    public GameObject playButton;
+    private GameObject playButton;
     private Vector3 playPosition;
     
 
-    public GameObject selectionTrio;
+    private GameObject selectionTrio;
     private Vector3 trioPosition;
+
+    public Sprite titleCard;
+    public Sprite subtitleCard;
+    public Sprite endCard;
+
+    private int begSlideCount;
+    private int midSlideCount;
+    private int endSlideCount;
+    private int slideTotalCount;
+
+    private int selectedID;
+    private int selectedSection;
 
     //Bottom Up
     //private bool emptySlide = false;
@@ -80,6 +92,8 @@ public class SlideNumbering : MonoBehaviour
         {
             case 0:
                 //Bottom up- record button is visible but not yet active, planning button goes away, play story button is visible but disabled
+                Destroy(GameObject.Find("NextSlide"));
+                Destroy(GameObject.Find("LastSlide"));
                 GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = false;
                 GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false;
                 GameObject.FindGameObjectWithTag("planning_button").GetComponent<Button>().interactable = false;
@@ -110,19 +124,27 @@ public class SlideNumbering : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        SlideArray[] arrays = GetComponentsInChildren<SlideArray>();
+
+        begSlideCount = arrays[0].getCurrent();
+        midSlideCount = arrays[1].getCurrent();
+        endSlideCount = arrays[2].getCurrent();
+
+
+        slideTotalCount = begSlideCount + midSlideCount + endSlideCount;
+
+        
+
         if (getSelectedStatus()&&getSelectedData().isFilled())
         {
-            getSelectedData().UpdatePlayRecordButton();
+            getSelectedData().UpdatePlayRecordButton(begSlideCount, midSlideCount, endSlideCount, slideTotalCount, selectedSection, selectedID);
         }
         
 
 
         int num = 1;
         
-
-        SlideArray[] arrays = GetComponentsInChildren<SlideArray>();
-
-
+        
         foreach (Transform child in this.transform) //Gets all slide arrays set as children to the GameObject with this script
         {
             foreach (Transform grandchild in child.transform)
@@ -159,6 +181,10 @@ public class SlideNumbering : MonoBehaviour
                         {
                             button.GetComponent<Button>().interactable = true;
                         }
+
+                    if (begSlideCount>=5) {GameObject.Find("AddBeg").GetComponent<Button>().interactable = false; }
+                    if (midSlideCount>=5) {GameObject.Find("AddMid").GetComponent<Button>().interactable = false; }
+                    if (endSlideCount>=5) {GameObject.Find("AddEnd").GetComponent<Button>().interactable = false; }
 
                     SlideArray[] childrenSlides = GetComponentsInChildren<SlideArray>();
 
@@ -281,6 +307,17 @@ public class SlideNumbering : MonoBehaviour
                         GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false;
                     }
                 }
+                else
+                {
+                    if (begSlideCount >= 5) { GameObject.Find("AddBeg").GetComponent<Button>().interactable = false; }
+                    else { GameObject.Find("AddBeg").GetComponent<Button>().interactable = true; }
+                    if (midSlideCount >= 5) { GameObject.Find("AddMid").GetComponent<Button>().interactable = false; }
+                    else { GameObject.Find("AddMid").GetComponent<Button>().interactable = true; }
+                    if (endSlideCount >= 5) { GameObject.Find("AddEnd").GetComponent<Button>().interactable = false; }
+                    else { GameObject.Find("AddEnd").GetComponent<Button>().interactable = true; }
+
+
+                }
 
                 if (donePlanButtonReady()) { GameObject.FindGameObjectWithTag("planning_button").GetComponent<Button>().interactable = true; }
                 else { GameObject.FindGameObjectWithTag("planning_button").GetComponent<Button>().interactable = false; }
@@ -361,6 +398,32 @@ public class SlideNumbering : MonoBehaviour
                     //do nothing, the slide calling this function handles its own state
                 }
                 else { grandchildren[k].deselectMe(); }
+
+            }
+        }
+
+
+
+        updateSelectedVars();
+
+    }
+
+    public void selectNewRemotely(int section, int slide)
+    {
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
+            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+            for (int k = 0; k < grandchildren.Length; k++)
+            {
+                if (i == section && grandchildren[k].getListID() == slide)
+                {
+                    grandchildren[k].selectMe();
+                    //do nothing, the slide calling this function handles its own state
+                }
+                
 
             }
         }
@@ -478,6 +541,31 @@ public class SlideNumbering : MonoBehaviour
       
     }
 
+    public void updateNewEnactmentObjects(int sect, int id)
+    {
+
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
+            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+            for (int k = 0; k < grandchildren.Length; k++)
+            {
+                if (sect == i && grandchildren[k].getListID() == id)
+                {
+
+                    grandchildrenData[k].updateEnactmentScreen(); 
+
+                }
+
+            }
+        }
+
+       // getSelectedData().updateEnactmentScreen();
+
+    }
+
     public void enactmentCheck()
     {
         getSelectedData().updatePoseMode();
@@ -558,9 +646,8 @@ public class SlideNumbering : MonoBehaviour
             {
                 if (grandchildren[k].getSelected() == true)
                 {
-
                     return grandchildrenData[k];
-
+                    
                 }
                 
             }
@@ -589,6 +676,30 @@ public class SlideNumbering : MonoBehaviour
         }
         return new SlideSelectSlide();
     }
+
+
+    private void updateSelectedVars()
+    {
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideSelectSlide[] grandchildren = children[i].GetComponentsInChildren<SlideSelectSlide>();
+            //SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+            for (int k = 0; k < grandchildren.Length; k++)
+            {
+                if (grandchildren[k].getSelected() == true)
+                {
+                    selectedSection = i;
+                    selectedID = grandchildren[k].getListID();
+
+                }
+
+            }
+        }
+
+    }
+
 
     private bool getSelectedStatus()
     {
@@ -624,8 +735,9 @@ public class SlideNumbering : MonoBehaviour
             Destroy(current);
         }
 
-        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = blankSprite;
-        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(.596f, .824f, .894f, 1);
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = titleCard;
         GameObject.Find("PlayCharacter").GetComponent<Image>().color = new Color(1, 1, 1, 0);
         GameObject.Find("PlayTitle").GetComponent<Text>().text = GameObject.FindGameObjectWithTag("main_title").GetComponent<Text>().text;
         GameObject.Find("PlayTitle").GetComponent<Text>().color = new Color(0, 0, 0, 1);
@@ -645,24 +757,27 @@ public class SlideNumbering : MonoBehaviour
 
         GameObject.Find("PlayWindow").GetComponent<Image>().color = new Color(1, 1, 1, 0);
 
-        GameObject.Find("PlayInstruction").GetComponent<Text>().color = new Color(0, 0, 0, 0);
+        //GameObject.Find("PlayInstruction").GetComponent<Text>().color = new Color(0, 0, 0, 0);
         GameObject.FindGameObjectWithTag("play_story_button").GetComponent<Button>().interactable = false;
         GameObject.FindGameObjectWithTag("playscreen_back_button").GetComponent<Button>().interactable = false;
         GameObject.FindGameObjectWithTag("play_story_button").GetComponent<Image>().color = new Color(1,1,1,0);
+        GameObject.Find("PlayText").GetComponent<Text>().color = new Color(1, 1, 1, 0);
         GameObject.FindGameObjectWithTag("playscreen_back_button").GetComponent<Image>().color = new Color(1, 1, 1, 0);
 
 
         //Start Recording
         GameObject.Find("Recorder").GetComponent<Animator>().StartRecording(24*60*5);
-
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = titleCard;
 
         yield return new WaitForSeconds(wait); //pause for title
 
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = subtitleCard;
         GameObject.Find("PlayTitle").GetComponent<Text>().text = GameObject.FindGameObjectWithTag("beg_title").GetComponent<Text>().text;
 
         yield return new WaitForSeconds(wait);
 
-        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+        //GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
         GameObject.Find("PlayTitle").GetComponent<Text>().color = new Color(0, 0, 0, 0);
         GameObject.Find("PlayCharacter").GetComponent<Image>().color = new Color(1, 1, 1, 1);
 
@@ -685,8 +800,8 @@ public class SlideNumbering : MonoBehaviour
             Destroy(current);
         }
 
-        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = blankSprite;
-        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(.596f, .824f, .894f, 1);
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = subtitleCard;
+        //GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(.596f, .824f, .894f, 1);
 
         GameObject.Find("PlayCharacter").GetComponent<Image>().color = new Color(1, 1, 1, 0);
         GameObject.Find("PlayTitle").GetComponent<Text>().text = GameObject.FindGameObjectWithTag("mid_title").GetComponent<Text>().text;
@@ -714,8 +829,8 @@ public class SlideNumbering : MonoBehaviour
             Destroy(current);
         }
 
-        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = blankSprite;
-        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(.596f, .824f, .894f, 1);
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = subtitleCard;
+        //GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(.596f, .824f, .894f, 1);
 
         GameObject.Find("PlayCharacter").GetComponent<Image>().color = new Color(1, 1, 1, 0);
         GameObject.Find("PlayTitle").GetComponent<Text>().text = GameObject.FindGameObjectWithTag("end_title").GetComponent<Text>().text;
@@ -745,8 +860,8 @@ public class SlideNumbering : MonoBehaviour
             Destroy(current);
         }
 
-        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = blankSprite;
-        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(.596f, .824f, .894f, 1);
+        GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = endCard;
+        //GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(.596f, .824f, .894f, 1);
 
         GameObject.Find("PlayCharacter").GetComponent<Image>().color = new Color(1, 1, 1, 0);
         GameObject.Find("PlayTitle").GetComponent<Text>().text = "The End";
@@ -762,10 +877,11 @@ public class SlideNumbering : MonoBehaviour
         GameObject.Find("PlayWindow").GetComponent<Image>().color = new Color(1, 1, 1, .7098f);
         setTitle();
 
-        GameObject.Find("PlayInstruction").GetComponent<Text>().color = new Color(0, 0, 0, 1);
+        //GameObject.Find("PlayInstruction").GetComponent<Text>().color = new Color(0, 0, 0, 1);
         GameObject.FindGameObjectWithTag("play_story_button").GetComponent<Button>().interactable = true;
         GameObject.FindGameObjectWithTag("playscreen_back_button").GetComponent<Button>().interactable = true;
-        GameObject.FindGameObjectWithTag("play_story_button").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        GameObject.FindGameObjectWithTag("play_story_button").GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+        GameObject.Find("PlayText").GetComponent<Text>().color = new Color(1, 1, 1, 1);
         GameObject.FindGameObjectWithTag("playscreen_back_button").GetComponent<Image>().color = new Color(1, 1, 1, 1);
     }
 
@@ -805,6 +921,101 @@ public class SlideNumbering : MonoBehaviour
 
         return false;
         
+    }
+
+
+    public void nextSlide()
+    {
+        int newSection;
+        int newID;
+        int sectionLength;
+
+        updateSelectedVars();
+        Debug.Log(selectedSection);
+        Debug.Log(selectedID);
+        switch (selectedSection)
+        {
+            case 0:
+                sectionLength = begSlideCount;
+                break;
+            case 1:
+                sectionLength = midSlideCount;
+                break;
+            case 2:
+                sectionLength = endSlideCount;
+                break;
+            default:
+                sectionLength = 100;
+                break;
+        }
+
+
+        if (selectedID + 1 == sectionLength)
+        {
+            newSection = selectedSection+1;
+            newID = 0;
+            Debug.Log("Next");
+        }
+        else
+        {
+            newSection = selectedSection;
+            newID = selectedID+1;
+            Debug.Log("NextElse");
+        }
+
+        Debug.Log(newSection);
+        Debug.Log(newID);
+        selectNewRemotely(newSection, newID);
+        updateNewEnactmentObjects(newSection, newID);
+    }
+
+
+
+    public void lastSlide()
+    {
+        int newSection;
+        int newID;
+        int sectionLength;
+
+        updateSelectedVars();
+
+        Debug.Log(selectedSection);
+        Debug.Log(selectedID);
+
+
+        if (selectedID == 0)
+        {
+            newSection = selectedSection-1;
+            switch (newSection)
+            {
+                case 0:
+                    sectionLength = begSlideCount;
+                    break;
+                case 1:
+                    sectionLength = midSlideCount;
+                    break;
+                case 2:
+                    sectionLength = endSlideCount;
+                    break;
+                default:
+                    sectionLength = 100;
+                    break;
+            }
+            newID = sectionLength-1;
+            Debug.Log("Last");
+            
+        }
+        else
+        {
+            newSection = selectedSection;
+            newID = selectedID-1;
+            Debug.Log("LastElse");
+        }
+
+        Debug.Log(newSection);
+        Debug.Log(newID);
+        selectNewRemotely(newSection, newID);
+        updateNewEnactmentObjects(newSection, newID);
     }
 
 }

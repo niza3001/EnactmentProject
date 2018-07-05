@@ -45,7 +45,7 @@ public class SlideData : MonoBehaviour {
 
     }
 
-    public void UpdatePlayRecordButton()
+    public void UpdatePlayRecordButton(int beg, int mid, int end, int total, int sect, int id)
     {
         GameObject[] poseButtons = GameObject.FindGameObjectsWithTag("pose_button");
         GameObject[] charaPosButtons = GameObject.FindGameObjectsWithTag("chara_position");
@@ -55,6 +55,45 @@ public class SlideData : MonoBehaviour {
         GameObject backButton = GameObject.FindGameObjectWithTag("back_button");
         GameObject recordButton = GameObject.FindGameObjectWithTag("record_button");
 
+        int trueID=100;
+
+        bool nextTrue;
+        bool lastTrue;
+
+        if (sect==0)
+        {
+            trueID = id;
+        }
+        else if (sect==1)
+        {
+            trueID = beg + id;
+        }
+        else if (sect==2)
+        {
+            trueID = beg + mid + id;
+        }
+
+        if (trueID==0)
+        {
+            nextTrue = true;
+            lastTrue = false;
+        }
+        else if (trueID==total-1)
+        {
+            nextTrue = false;
+            lastTrue = true;
+        }
+        else
+        {
+            nextTrue = true;
+            lastTrue = true;
+        }
+
+        
+
+        //if (GameObject.Find("NextSlide")) { GameObject.Find("NextSlide").GetComponent<Button>().interactable = true; }
+        //if (GameObject.Find("LastSlide")) { GameObject.Find("LastSlide").GetComponent<Button>().interactable = true; }
+
         switch (poseMode)
         {
             case 1:
@@ -62,6 +101,31 @@ public class SlideData : MonoBehaviour {
                 playButton.GetComponent<Button>().interactable = false;
                 backButton.GetComponent<Button>().interactable = false;
                 recordButton.GetComponent<Button>().interactable = false;
+
+                if (GameObject.Find("NextSlide") && nextTrue)
+                {
+                    GameObject.Find("NextSlide").GetComponent<Button>().interactable = false;
+                    GameObject.Find("NextSlide").GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+                    GameObject.Find("NextText").GetComponent<Text>().color = new Color(1, 1, 1, 1);
+                }
+                else if (GameObject.Find("NextSlide"))
+                {
+                    GameObject.Find("NextSlide").GetComponent<Button>().interactable = false;
+                    GameObject.Find("NextSlide").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                    GameObject.Find("NextText").GetComponent<Text>().color = new Color(1, 1, 1, 0);
+                }
+                if (GameObject.Find("LastSlide") && lastTrue)
+                {
+                    GameObject.Find("LastSlide").GetComponent<Button>().interactable = false;
+                    GameObject.Find("LastSlide").GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+                    GameObject.Find("LastText").GetComponent<Text>().color = new Color(1, 1, 1, 1);
+                }
+                else if (GameObject.Find("NextSlide"))
+                {
+                    GameObject.Find("LastSlide").GetComponent<Button>().interactable = false;
+                    GameObject.Find("LastSlide").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                    GameObject.Find("LastText").GetComponent<Text>().color = new Color(1, 1, 1, 0);
+                }
 
                 foreach (GameObject button in poseButtons)
                 {
@@ -119,7 +183,28 @@ public class SlideData : MonoBehaviour {
                 GameObject.FindGameObjectWithTag("enactment_check").GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 if (!isRecording && !slideAudio.isPlaying)
                 {
-                    
+                    if (GameObject.Find("NextSlide")&&nextTrue) {
+                        GameObject.Find("NextSlide").GetComponent<Button>().interactable = true;
+                        GameObject.Find("NextSlide").GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+                        GameObject.Find("NextText").GetComponent<Text>().color = new Color(1, 1, 1, 1);
+                    }
+                    else if(GameObject.Find("NextSlide")) {
+                        GameObject.Find("NextSlide").GetComponent<Button>().interactable = false;
+                        GameObject.Find("NextSlide").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                        GameObject.Find("NextText").GetComponent<Text>().color = new Color(1, 1, 1, 0);
+                    }
+                    if (GameObject.Find("LastSlide")&& lastTrue) {
+                        GameObject.Find("LastSlide").GetComponent<Button>().interactable = true;
+                        GameObject.Find("LastSlide").GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+                        GameObject.Find("LastText").GetComponent<Text>().color = new Color(1, 1, 1, 1);
+                    }
+                    else if (GameObject.Find("NextSlide"))
+                    {
+                        GameObject.Find("LastSlide").GetComponent<Button>().interactable = false;
+                        GameObject.Find("LastSlide").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                        GameObject.Find("LastText").GetComponent<Text>().color = new Color(1, 1, 1, 0);
+                    }
+
                     foreach (GameObject button in poseButtons)
                     {
                         button.GetComponent<Button>().interactable = true;
@@ -145,6 +230,32 @@ public class SlideData : MonoBehaviour {
                     recordButton.GetComponent<Button>().interactable = true;
                     playButton.GetComponent<Image>().sprite = playSprite;
                     playButton.GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+
+                    if (GameObject.Find("NextSlide") && nextTrue)
+                    {
+                        GameObject.Find("NextSlide").GetComponent<Button>().interactable = false;
+                        GameObject.Find("NextSlide").GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+                        GameObject.Find("NextText").GetComponent<Text>().color = new Color(1, 1, 1, 1);
+                    }
+                    else if (GameObject.Find("NextSlide"))
+                    {
+                        GameObject.Find("NextSlide").GetComponent<Button>().interactable = false;
+                        GameObject.Find("NextSlide").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                        GameObject.Find("NextText").GetComponent<Text>().color = new Color(1, 1, 1, 0);
+                    }
+                    if (GameObject.Find("LastSlide") && lastTrue)
+                    {
+                        GameObject.Find("LastSlide").GetComponent<Button>().interactable = false;
+                        GameObject.Find("LastSlide").GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+                        GameObject.Find("LastText").GetComponent<Text>().color = new Color(1, 1, 1, 1);
+                    }
+                    else if (GameObject.Find("NextSlide"))
+                    {
+                        GameObject.Find("LastSlide").GetComponent<Button>().interactable = false;
+                        GameObject.Find("LastSlide").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                        GameObject.Find("LastText").GetComponent<Text>().color = new Color(1, 1, 1, 0);
+                    }
+
                 }
                 else if (slideAudio.isPlaying)
                 {
@@ -157,8 +268,34 @@ public class SlideData : MonoBehaviour {
                     recordButton.GetComponent<Button>().interactable = false;
                     playButton.GetComponent<Image>().sprite = recordStop;
                     playButton.GetComponent<Image>().color = new Color(1, 0, 0, 1);
+
+                    if (GameObject.Find("NextSlide") && nextTrue)
+                    {
+                        GameObject.Find("NextSlide").GetComponent<Button>().interactable = false;
+                        GameObject.Find("NextSlide").GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+                        GameObject.Find("NextText").GetComponent<Text>().color = new Color(1, 1, 1, 1);
+                    }
+                    else if (GameObject.Find("NextSlide"))
+                    {
+                        GameObject.Find("NextSlide").GetComponent<Button>().interactable = false;
+                        GameObject.Find("NextSlide").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                        GameObject.Find("NextText").GetComponent<Text>().color = new Color(1, 1, 1, 0);
+                    }
+                    if (GameObject.Find("LastSlide") && lastTrue)
+                    {
+                        GameObject.Find("LastSlide").GetComponent<Button>().interactable = false;
+                        GameObject.Find("LastSlide").GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+                        GameObject.Find("LastText").GetComponent<Text>().color = new Color(1, 1, 1, 1);
+                    }
+                    else if (GameObject.Find("NextSlide"))
+                    {
+                        GameObject.Find("LastSlide").GetComponent<Button>().interactable = false;
+                        GameObject.Find("LastSlide").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                        GameObject.Find("LastText").GetComponent<Text>().color = new Color(1, 1, 1, 0);
+                    }
+
                 }
-                
+
                 break;
 
             default:
