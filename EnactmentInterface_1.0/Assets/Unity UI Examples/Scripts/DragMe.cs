@@ -91,4 +91,11 @@ public class DragMe : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         objectID = id;
 
     }
+
+    public void OnPointerEnter(PointerEventData data)
+    {
+        Debug.Log("Help");
+       
+    }
+
 }

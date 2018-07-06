@@ -16,7 +16,7 @@ public class SlideNumbering : MonoBehaviour
     private bool isRecording = false;
     private bool donePlanning = false;
     private bool ready = false;
-    private int condition = 0; //0-bottom up, 1-hybrid, 2-top down
+    private int condition = 2; //0-bottom up, 1-hybrid, 2-top down
     // Use this for initialization
 
     public Sprite recordStop;
@@ -755,6 +755,9 @@ public class SlideNumbering : MonoBehaviour
 
         float wait = 3.0f;
 
+        int whichClip = 1;
+        int iterator = 1;
+
         GameObject.Find("PlayWindow").GetComponent<Image>().color = new Color(1, 1, 1, 0);
 
         //GameObject.Find("PlayInstruction").GetComponent<Text>().color = new Color(0, 0, 0, 0);
@@ -764,9 +767,12 @@ public class SlideNumbering : MonoBehaviour
         GameObject.Find("PlayText").GetComponent<Text>().color = new Color(1, 1, 1, 0);
         GameObject.FindGameObjectWithTag("playscreen_back_button").GetComponent<Image>().color = new Color(1, 1, 1, 0);
 
+        GameObject.Find("SaveStory").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+        GameObject.Find("SaveText").GetComponent<Text>().color = new Color(1, 1, 1, 0);
+        GameObject.Find("SaveStory").GetComponent<Button>().interactable = false;
 
         //Start Recording
-        GameObject.Find("Recorder").GetComponent<Animator>().StartRecording(24*60*5);
+        //GameObject.Find("Recorder").GetComponent<Animator>().StartRecording(24*60*5);
         GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
         GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = titleCard;
 
@@ -788,8 +794,25 @@ public class SlideNumbering : MonoBehaviour
             beginning[i].updatePlayScreen();
             beginning[i].playAudio();
             yield return new WaitForSeconds(wait);
+
+            while (whichClip == 1)
+            {
+                if (System.IO.File.Exists("myfile"))
+                {
+                    GetComponent<SavWav>().Save("myfile" + 1, beginning[i].getAudio() );
+                    whichClip = 2;
+                }
+                else
+                {
+                    GetComponent<SavWav>().Save("myfile", beginning[i].getAudio());
+                    whichClip = 2;
+                }
+            }
+
+
         }
 
+      
 
         GameObject[] currents;
 
@@ -871,7 +894,7 @@ public class SlideNumbering : MonoBehaviour
 
 
         //Stop Recording
-        GameObject.Find("Recorder").GetComponent<Animator>().StopRecording();
+        //GameObject.Find("Recorder").GetComponent<Animator>().StopRecording();
 
 
         GameObject.Find("PlayWindow").GetComponent<Image>().color = new Color(1, 1, 1, .7098f);
@@ -883,6 +906,10 @@ public class SlideNumbering : MonoBehaviour
         GameObject.FindGameObjectWithTag("play_story_button").GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
         GameObject.Find("PlayText").GetComponent<Text>().color = new Color(1, 1, 1, 1);
         GameObject.FindGameObjectWithTag("playscreen_back_button").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+
+        GameObject.Find("SaveStory").GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+        GameObject.Find("SaveText").GetComponent<Text>().color = new Color(1, 1, 1, 1);
+        GameObject.Find("SaveStory").GetComponent<Button>().interactable = true;
     }
 
 
@@ -1017,5 +1044,8 @@ public class SlideNumbering : MonoBehaviour
         selectNewRemotely(newSection, newID);
         updateNewEnactmentObjects(newSection, newID);
     }
+
+
+
 
 }

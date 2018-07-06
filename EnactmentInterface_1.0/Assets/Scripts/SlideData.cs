@@ -376,6 +376,11 @@ public class SlideData : MonoBehaviour {
         }
     }
 
+    public AudioClip getAudio()
+    {
+        return slideAudio.clip;
+    }
+
     public bool isSlideAudioPlaying()
     {
         if (slideAudio.clip != null)
