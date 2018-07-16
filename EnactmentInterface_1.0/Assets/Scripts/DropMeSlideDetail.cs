@@ -20,41 +20,41 @@ public class DropMeSlideDetail : MonoBehaviour, IDropHandler, IPointerEnterHandl
     public void OnDrop(PointerEventData data)
     {
 
+        if (this.GetComponent<SlideData>().getLock()==false) {
+            Sprite dropSprite = GetDropSprite(data);
 
-        Sprite dropSprite = GetDropSprite(data);
+            string dropTag = GetDropTag(data);
 
-        string dropTag = GetDropTag(data);
+            int itemIndex;
+            itemIndex = compareIndex(dropTag, dropSprite);
 
-        int itemIndex;
-        itemIndex = compareIndex(dropTag, dropSprite);
+            switch (dropTag)
+            {
+                case "chara":
+                    holder = this.transform.Find("CharaHolder(Clone)").gameObject;
+                    this.GetComponent<SlideData>().setChara(itemIndex);
+                    break;
 
-        switch (dropTag)
-        {
-            case "chara":
-                holder = this.transform.Find("CharaHolder(Clone)").gameObject;
-                this.GetComponent<SlideData>().setChara(itemIndex);
-                break;
+                case "item":
+                    holder = this.transform.Find("ItemHolder(Clone)").gameObject;
+                    this.GetComponent<SlideData>().setItem(itemIndex);
+                    break;
 
-            case "item":
-                holder = this.transform.Find("ItemHolder(Clone)").gameObject;
-                this.GetComponent<SlideData>().setItem(itemIndex);
-                break;
+                case "backdrop":
+                    holder = this.transform.Find("BackdropHolder(Clone)").gameObject;
+                    this.GetComponent<SlideData>().setBackdrop(itemIndex);
+                    break;
 
-            case "backdrop":
-                holder = this.transform.Find("BackdropHolder(Clone)").gameObject;
-                this.GetComponent<SlideData>().setBackdrop(itemIndex);
-                break;
+                case null:
+                    holder = null;
+                    break;
+                default:
+                    break;
+            }
 
-            case null:
-                holder = null;
-                break;
-            default:
-                break;
+            if (holder != null) { holder.GetComponent<Image>().overrideSprite = dropSprite; holder.GetComponent<Image>().color = Color.white; }
+
         }
-
-        if (holder != null) { holder.GetComponent<Image>().overrideSprite = dropSprite; holder.GetComponent<Image>().color = Color.white; }
-
-       
         
     }
 
@@ -62,23 +62,25 @@ public class DropMeSlideDetail : MonoBehaviour, IDropHandler, IPointerEnterHandl
     {
 
         string dropTag = GetDropTag(data);
-
-        switch (dropTag)
+        if (this.GetComponent<SlideData>().getLock() == false)
         {
-            case "chara":
-                this.transform.Find("CharaHolder(Clone)").gameObject.GetComponent<Image>().color = Color.gray;
-                break;
+            switch (dropTag)
+            {
+                case "chara":
+                    this.transform.Find("CharaHolder(Clone)").gameObject.GetComponent<Image>().color = Color.gray;
+                    break;
 
-            case "item":
-                this.transform.Find("ItemHolder(Clone)").gameObject.GetComponent<Image>().color = Color.gray;
-                break;
+                case "item":
+                    this.transform.Find("ItemHolder(Clone)").gameObject.GetComponent<Image>().color = Color.gray;
+                    break;
 
-            case "backdrop":
-                this.transform.Find("BackdropHolder(Clone)").gameObject.GetComponent<Image>().color = Color.gray;
-                break;
+                case "backdrop":
+                    this.transform.Find("BackdropHolder(Clone)").gameObject.GetComponent<Image>().color = Color.gray;
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -87,22 +89,25 @@ public class DropMeSlideDetail : MonoBehaviour, IDropHandler, IPointerEnterHandl
 
         string dropTag = GetDropTag(data);
 
-        switch (dropTag)
+        if (this.GetComponent<SlideData>().getLock() == false)
         {
-            case "chara":
-                this.transform.Find("CharaHolder(Clone)").gameObject.GetComponent<Image>().color = Color.white;
-                break;
+            switch (dropTag)
+            {
+                case "chara":
+                    this.transform.Find("CharaHolder(Clone)").gameObject.GetComponent<Image>().color = Color.white;
+                    break;
 
-            case "item":
-                this.transform.Find("ItemHolder(Clone)").gameObject.GetComponent<Image>().color = Color.white;
-                break;
+                case "item":
+                    this.transform.Find("ItemHolder(Clone)").gameObject.GetComponent<Image>().color = Color.white;
+                    break;
 
-            case "backdrop":
-                this.transform.Find("BackdropHolder(Clone)").gameObject.GetComponent<Image>().color = Color.white;
-                break;
+                case "backdrop":
+                    this.transform.Find("BackdropHolder(Clone)").gameObject.GetComponent<Image>().color = Color.white;
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
+            }
         }
     }
 

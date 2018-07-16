@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4606876861082140}
   - component: {fileID: 114063785084897622}
   - component: {fileID: 114041358265470212}
-  - component: {fileID: 114813531264073502}
   m_Layer: 0
   m_Name: Girl2
   m_TagString: Untagged
@@ -71,21 +70,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconSprite: {fileID: 21300000, guid: 88c536bb0cde0c042ac5bfacd940f9fd, type: 3}
---- !u!114 &114813531264073502
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1599600421007796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 087c7d9ef34a28e4bae73f051a5a28ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poses:
-  - {fileID: 21300000, guid: 59050760b9f01844289b8b878322b0ed, type: 3}
-  - {fileID: 21300000, guid: 755519bf392a7d144bac74af1105d94d, type: 3}
-  - {fileID: 21300000, guid: 0a4e98f8dee391d48a851f9f30b86a68, type: 3}
-  - {fileID: 21300000, guid: e769751b4ec20ae4e885002a5e885ad0, type: 3}
-  - {fileID: 21300000, guid: 77617cfcedde4bd4e930ee23947ddcaa, type: 3}
-  Test: 0

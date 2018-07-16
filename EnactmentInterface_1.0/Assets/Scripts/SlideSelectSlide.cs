@@ -26,6 +26,7 @@ public class SlideSelectSlide : MonoBehaviour, IPointerClickHandler, IBeginDragH
     public Sprite selectBorder;
 
     public GameObject slideRecordIcon;
+    public GameObject slideWriteIcon;
 
     private Sprite borderSprite;
     private string borderName;
@@ -75,12 +76,17 @@ public class SlideSelectSlide : MonoBehaviour, IPointerClickHandler, IBeginDragH
 
         GameObject newRecordIcon = (GameObject)Instantiate(slideRecordIcon, GetComponentInParent<Canvas>().transform);
         newRecordIcon.transform.SetParent(this.transform);
-        newRecordIcon.transform.localPosition = new Vector3(0, -75, 0);
+        newRecordIcon.transform.localPosition = new Vector3(-25, -75, 0);
         newRecordIcon.GetComponent<Image>().color = new Color(1, 1, 1, 0);
 
         GameObject newNumber = (GameObject)Instantiate(numberText, GetComponentInParent<Canvas>().transform);
         newNumber.transform.SetParent(this.transform);
         newNumber.transform.localPosition = new Vector3(0, -75, 0);
+
+        GameObject newWriteIcon = (GameObject)Instantiate(slideWriteIcon, GetComponentInParent<Canvas>().transform);
+        newWriteIcon.transform.SetParent(this.transform);
+        newWriteIcon.transform.localPosition = new Vector3(25, -75, 0);
+        newWriteIcon.GetComponent<Image>().color = new Color(1, 1, 1, 0);
 
         //the border prefab has no script, and is best found by its name, which varies by the tag
         switch (this.tag)
@@ -103,10 +109,16 @@ public class SlideSelectSlide : MonoBehaviour, IPointerClickHandler, IBeginDragH
     // Update is called once per frame
     void Update()
     {
-           /* if (selected == true)
-            {
-                GetComponent<SlideData>().updateCharaPose();
-            }*/
+        
+
+        if (GetComponent<SlideData>().getSceneInfo() == "")
+        {
+            this.transform.Find("SlideWritten(Clone)").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+        }
+        else
+        {
+            this.transform.Find("SlideWritten(Clone)").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        }
         
     }
 

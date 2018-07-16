@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4013891103770712}
   - component: {fileID: 114558104270013126}
   - component: {fileID: 114537939718145692}
-  - component: {fileID: 114153284122566626}
   m_Layer: 0
   m_Name: Boy4
   m_TagString: Untagged
@@ -42,24 +41,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114153284122566626
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1391277401670256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 087c7d9ef34a28e4bae73f051a5a28ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poses:
-  - {fileID: 21300000, guid: fb6e0f14aeb81674bb53f345387bacb3, type: 3}
-  - {fileID: 21300000, guid: ccbd29a1f04ae5848a664b8ec0a43e76, type: 3}
-  - {fileID: 21300000, guid: 7bc7d5da7b5bc4b4492cece902e9ab8e, type: 3}
-  - {fileID: 21300000, guid: bdf14a0638deeee4799002d7e9d8250b, type: 3}
-  - {fileID: 21300000, guid: f1a4ee828380014478370b766eb52fce, type: 3}
-  Test: 0
 --- !u!114 &114537939718145692
 MonoBehaviour:
   m_ObjectHideFlags: 1

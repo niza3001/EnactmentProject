@@ -12,6 +12,10 @@ public class SlideData : MonoBehaviour {
     private int backdropIndex=0;
     private int itemIndex=0;
     private AudioSource slideAudio;
+
+    private string sceneInfo = "";
+   
+
     private int slidePose = 0;
     private bool isItem = false;
     private bool isChara = false;
@@ -22,6 +26,7 @@ public class SlideData : MonoBehaviour {
     private int charaPosition = 3;
     private int objectPosition = 3;
 
+    private bool isLocked = false;
 
     private float audioTime = 0.0f;
 
@@ -43,6 +48,27 @@ public class SlideData : MonoBehaviour {
        
 
 
+    }
+
+
+    public void lockScene()
+    {
+        isLocked = true;
+    }
+
+    public bool getLock()
+    {
+        return isLocked;
+    }
+
+    public string getSceneInfo()
+    {
+        return sceneInfo;
+    }
+
+    public void setSceneInfo(string s)
+    {
+        sceneInfo = s;
     }
 
     public void UpdatePlayRecordButton(int beg, int mid, int end, int total, int sect, int id)
@@ -337,7 +363,7 @@ public class SlideData : MonoBehaviour {
 
     public bool isSlideEmpty()
     {
-        if (isRecord == false || isItem == false || isBackdrop == false || isChara == false)
+        if (isRecord == false || isItem == false || isBackdrop == false || isChara == false || sceneInfo == "")
         {
             return true;
         }
@@ -487,20 +513,29 @@ public class SlideData : MonoBehaviour {
 
     public void setChara(int ind)
     {
-        charaIndex = ind;
-        isChara = true;
+        if (isLocked == false)
+        {
+            charaIndex = ind;
+            isChara = true;
+        }
     }
 
     public void setBackdrop(int ind)
     {
-        backdropIndex = ind;
-        isBackdrop = true;
+        if (isLocked == false)
+        {
+            backdropIndex = ind;
+            isBackdrop = true;
+        }
     }
 
     public void setItem(int ind)
     {
-        itemIndex = ind;
-        isItem = true;
+        if (isLocked == false)
+        {
+            itemIndex = ind;
+            isItem = true;
+        }
     }
 
     public int getChara()
@@ -534,7 +569,8 @@ public class SlideData : MonoBehaviour {
         //updateItemPos();
         updateCharaPose(false);
         updateCharaPos(true);
-        
+
+        GameObject.Find("SceneInfo").GetComponent<Text>().text = sceneInfo;
     }
 
     public void updateItemPos(bool repose)
@@ -597,7 +633,7 @@ public class SlideData : MonoBehaviour {
     }
     public bool isFilled()
     {
-        if (isChara==true && isItem == true && isBackdrop == true) { return true; }
+        if (isChara==true && isItem == true && isBackdrop == true && sceneInfo!="") { return true; }
         else { return false; }
     }
 

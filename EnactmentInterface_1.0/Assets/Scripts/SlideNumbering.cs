@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,10 +14,15 @@ public class SlideNumbering : MonoBehaviour
     /*This class updates the numbers for each slide according to their position in the heirarchy, working its way down from the Beginning slide array to the Ending slides*/
     /*For this reason, it's important to keep the slides in order in the heirarchy by their id in each array*/
 
+    private string participantName;
+
+
     private bool isRecording = false;
     private bool donePlanning = false;
     private bool ready = false;
-    private int condition = 2; //0-bottom up, 1-hybrid, 2-top down
+
+    private int condition = 0; //0-bottom up, 1-hybrid, 2-top down
+    
     // Use this for initialization
 
     public Sprite recordStop;
@@ -45,6 +51,11 @@ public class SlideNumbering : MonoBehaviour
     private int selectedID;
     private int selectedSection;
 
+    private bool recordScreenReady = false;
+    private bool planningReady = false;
+    private bool addReady = true;
+    private int addWhich = 0;
+    private bool playReady = false;
     //Bottom Up
     //private bool emptySlide = false;
 
@@ -53,7 +64,24 @@ public class SlideNumbering : MonoBehaviour
 
     void Start()
     {
-        
+
+        //* Set up Instructions*//
+
+
+        switch (condition)
+        {
+            case 0:
+                GameObject.Find("PlayPopUpText").GetComponent<Text>().text = "You can't play your story just yet! Please make sure every scene has been filled up and recorded first. To record a scene, select it with your mouse and hit then red circle record button to go to the acting screen. Also don't forget you need your main title and titles for each section of your story, as well as at least one slide in each section!";
+                break;
+            case 2:
+                GameObject.Find("PlayPopUpText").GetComponent<Text>().text = "You can't play your story just yet! Please make sure every scene has been recorded first. To record a scene, select it with your mouse and hit then red circle record button to go to the acting screen.";
+                break;
+            default:
+                break;
+        }
+
+        //**********************//
+
         playSprite = GameObject.FindGameObjectWithTag("play_slide_button").GetComponent<Image>().sprite;
 
         playButton = GameObject.FindGameObjectWithTag("play_screen");
@@ -94,8 +122,10 @@ public class SlideNumbering : MonoBehaviour
                 //Bottom up- record button is visible but not yet active, planning button goes away, play story button is visible but disabled
                 Destroy(GameObject.Find("NextSlide"));
                 Destroy(GameObject.Find("LastSlide"));
-                GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = false;
-                GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false;
+                //GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = false;
+                GameObject.FindGameObjectWithTag("record_screen").GetComponent<Image>().color = new Color(.784f, .784f, .784f, .314f);
+                //GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false;
+                GameObject.FindGameObjectWithTag("play_screen").GetComponent<Image>().color = new Color(.784f, .784f, .784f, .314f);
                 GameObject.FindGameObjectWithTag("planning_button").GetComponent<Button>().interactable = false;
                 GameObject.FindGameObjectWithTag("planning_button").GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 GameObject.FindGameObjectWithTag("planning_button").transform.SetAsFirstSibling();
@@ -107,11 +137,13 @@ public class SlideNumbering : MonoBehaviour
             case 2:
                 //Top down - record button and play story button goes away, planning button is visible but disabled
                 GameObject.FindGameObjectWithTag("planning_button").transform.SetAsLastSibling();
-                GameObject.FindGameObjectWithTag("planning_button").GetComponent<Button>().interactable = false;
+                //GameObject.FindGameObjectWithTag("planning_button").GetComponent<Button>().interactable = false;
+                GameObject.FindGameObjectWithTag("planning_button").GetComponent<Image>().color = new Color(.784f, .784f, .784f, .314f);
                 GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = false;
                 GameObject.FindGameObjectWithTag("record_screen").GetComponent<Image>().color = new Color(1, 0, 0, 0);
-                GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false;
-                GameObject.FindGameObjectWithTag("play_screen").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                //GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false;
+                GameObject.FindGameObjectWithTag("play_screen").GetComponent<Image>().color = new Color(.784f, .784f, .784f, .314f);
+                //GameObject.FindGameObjectWithTag("play_screen").GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 GameObject.FindGameObjectWithTag("play_screen").transform.position = new Vector3(5000,5000);
                 GameObject.FindGameObjectWithTag("instructions").GetComponent<Text>().text = "Plan Your Story";
                 break;
@@ -168,6 +200,25 @@ public class SlideNumbering : MonoBehaviour
         SlideData[] begSlides = children[0].GetComponentsInChildren<SlideData>();
         SlideData[] midSlides = children[1].GetComponentsInChildren<SlideData>();
         SlideData[] endSlides = children[2].GetComponentsInChildren<SlideData>();
+        if (getSelectedStatus())
+        {
+
+            if (getSelectedData().getLock())
+            {
+                GameObject.Find("WriteSlide").GetComponent<Button>().interactable = false;
+                GameObject.Find("WriteSlide").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+            }
+            else
+            {
+                GameObject.Find("WriteSlide").GetComponent<Button>().interactable = true;
+                GameObject.Find("WriteSlide").GetComponent<Image>().color = new Color(.232f, .918f, .235f, 1);
+            }
+        }
+        else
+        {
+            GameObject.Find("WriteSlide").GetComponent<Button>().interactable = false;
+            GameObject.Find("WriteSlide").GetComponent<Image>().color = new Color(1,1,1,0);
+        }
 
         switch (condition)
             {
@@ -179,12 +230,12 @@ public class SlideNumbering : MonoBehaviour
                     {
                         foreach (GameObject button in addButtons)
                         {
-                            button.GetComponent<Button>().interactable = true;
+                        //button.GetComponent<Button>().interactable = true;
+                        addReady = true;
+                        button.GetComponent<Image>().color = new Color(1,1,1,1);
                         }
 
-                    if (begSlideCount>=5) {GameObject.Find("AddBeg").GetComponent<Button>().interactable = false; }
-                    if (midSlideCount>=5) {GameObject.Find("AddMid").GetComponent<Button>().interactable = false; }
-                    if (endSlideCount>=5) {GameObject.Find("AddEnd").GetComponent<Button>().interactable = false; }
+                    
 
                     SlideArray[] childrenSlides = GetComponentsInChildren<SlideArray>();
 
@@ -203,8 +254,10 @@ public class SlideNumbering : MonoBehaviour
                     {
                         foreach (GameObject button in addButtons)
                         {
-                            button.GetComponent<Button>().interactable = false;
-                        }
+                        //button.GetComponent<Button>().interactable = false;
+                        addReady = false;
+                        button.GetComponent<Image>().color = new Color(.784f, .784f, .784f, .314f);
+                    }
 
                     SlideArray[] childrenSlides = GetComponentsInChildren<SlideArray>();
 
@@ -214,7 +267,7 @@ public class SlideNumbering : MonoBehaviour
 
                         for (int k = 0; k < grandchildren.Length; k++)
                         {
-                            grandchildren[k].draggingOff();
+                            //grandchildren[k].draggingOff();
 
                         }
                     }
@@ -226,22 +279,43 @@ public class SlideNumbering : MonoBehaviour
                     {
                         if (getSelectedData().isFilled())
                         {
-                            GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = true;
-                        }
+                            recordScreenReady = true;
+                        //GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = true;
+                        GameObject.FindGameObjectWithTag("record_screen").GetComponent<Image>().color = new Color(.925f, 0, 0, 1);
+
                     }
-                    else { GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = false; }
+                    else
+                    {
+                        recordScreenReady = false;
+                        GameObject.FindGameObjectWithTag("record_screen").GetComponent<Image>().color = new Color(.784f, .784f, .784f, .314f);
+                    }
+                    }
+                    else
+                    {
+                    //GameObject.FindGameObjectWithTag("record_screen").GetComponent<Button>().interactable = false;
+                    recordScreenReady = false;
+                    GameObject.FindGameObjectWithTag("record_screen").GetComponent<Image>().color = new Color(.784f, .784f, .784f, .314f); 
+                }
 
                     
                     if (begSlides.Length > 0 && midSlides.Length > 0 && endSlides.Length > 0 && !EmptySlide() && titlesFilled())
                     {
-                        GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = true;
+                    //GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = true;
+                    GameObject.FindGameObjectWithTag("play_screen").GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+                    playReady = true;
                     }
                     else
                     {
-                        GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false;
-                    }
+                    //GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false;
+                    playReady = false;
+                    GameObject.FindGameObjectWithTag("play_screen").GetComponent<Image>().color = new Color(.784f, .784f, .784f, .314f);
+                }
 
-                    break;
+                if (begSlideCount >= 5) { GameObject.Find("AddBeg").GetComponent<Button>().interactable = false; }
+                if (midSlideCount >= 5) { GameObject.Find("AddMid").GetComponent<Button>().interactable = false; }
+                if (endSlideCount >= 5) { GameObject.Find("AddEnd").GetComponent<Button>().interactable = false; }
+
+                break;
 
                 case 1:
                     
@@ -300,11 +374,15 @@ public class SlideNumbering : MonoBehaviour
                     
                     if (begSlides.Length > 0 && midSlides.Length > 0 && endSlides.Length > 0 && !EmptySlide())
                     {
-                        GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = true;
+                        //GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = true;
+                        GameObject.FindGameObjectWithTag("play_screen").GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+                        playReady = true;
                     }
                     else
                     {
-                        GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false;
+                        //GameObject.FindGameObjectWithTag("play_screen").GetComponent<Button>().interactable = false;
+                        GameObject.FindGameObjectWithTag("play_screen").GetComponent<Image>().color = new Color(.784f, .784f, .784f, .314f);
+                        playReady = false;
                     }
                 }
                 else
@@ -319,8 +397,18 @@ public class SlideNumbering : MonoBehaviour
 
                 }
 
-                if (donePlanButtonReady()) { GameObject.FindGameObjectWithTag("planning_button").GetComponent<Button>().interactable = true; }
-                else { GameObject.FindGameObjectWithTag("planning_button").GetComponent<Button>().interactable = false; }
+                if (donePlanButtonReady()) {
+                    //GameObject.FindGameObjectWithTag("planning_button").GetComponent<Button>().interactable = true;
+                    GameObject.FindGameObjectWithTag("planning_button").GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
+
+                    planningReady = true;
+                }
+                else {
+                    //GameObject.FindGameObjectWithTag("planning_button").GetComponent<Button>().interactable = false;
+                    GameObject.FindGameObjectWithTag("planning_button").GetComponent<Image>().color = new Color(.784f, .784f, .784f, .314f);
+
+                    planningReady = false;
+                }
                 
 
                 break;
@@ -351,6 +439,7 @@ public class SlideNumbering : MonoBehaviour
     {   
         donePlanning = true;
         GameObject.FindGameObjectWithTag("trash").GetComponent<Button>().interactable = false;
+        GameObject.FindGameObjectWithTag("all_canvases").GetComponent<CanvasManagerBottomUp>().planningHide();
     }
 
     public bool donePlanButtonReady()
@@ -745,8 +834,10 @@ public class SlideNumbering : MonoBehaviour
     }
 
 
-    public IEnumerator SequenceTiming()
+    public IEnumerator SequenceTiming(bool saveFiles)
       {
+        GameObject.FindGameObjectWithTag("all_canvases").GetComponent<CanvasManagerBottomUp>().saveStoryHide();
+
           SlideArray[] sections = GetComponentsInChildren<SlideArray>();
 
           SlideData[] beginning = sections[0].GetComponentsInChildren<SlideData>();
@@ -755,8 +846,17 @@ public class SlideNumbering : MonoBehaviour
 
         float wait = 3.0f;
 
-        int whichClip = 1;
-        int iterator = 1;
+        int fileNum = 0;
+        //int whichClip = 1;
+        //int iterator = 1;
+
+        if (saveFiles==true) {
+            participantName = "Participant" + GameObject.Find("InputID").GetComponent<InputField>().text;
+            Directory.CreateDirectory(Application.dataPath + "/" + participantName);
+           
+        }
+        bool doubleTroubleFrame = false;
+        bool doubleTroubleAud = false;
 
         GameObject.Find("PlayWindow").GetComponent<Image>().color = new Color(1, 1, 1, 0);
 
@@ -776,11 +876,32 @@ public class SlideNumbering : MonoBehaviour
         GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
         GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = titleCard;
 
+
+        if (saveFiles)
+        {
+            if (System.IO.File.Exists(fileNum +"_" + participantName + "/mainTitle.png"))
+            { ScreenCapture.CaptureScreenshot(fileNum + "_" + participantName + "/mainTitle2.png"); }
+            else { ScreenCapture.CaptureScreenshot(fileNum + "_" + participantName + "/mainTitle.png"); }
+
+        }
+
+        fileNum += 1;
+
         yield return new WaitForSeconds(wait); //pause for title
 
         GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().sprite = subtitleCard;
-        GameObject.Find("PlayTitle").GetComponent<Text>().text = GameObject.FindGameObjectWithTag("beg_title").GetComponent<Text>().text;
+        GameObject.Find("PlayTitle").GetComponent<Text>().text = GameObject.Find("BegTitle").GetComponent<InputField>().text;
 
+
+        if (saveFiles)
+        {
+            if (System.IO.File.Exists(fileNum + "_" + participantName + "/begTitle.png"))
+            { ScreenCapture.CaptureScreenshot(fileNum + "_" + participantName + "/begTitle2.png"); }
+            else { ScreenCapture.CaptureScreenshot(fileNum + "_" + participantName + "/begTitle.png"); }
+
+        }
+
+        fileNum += 1;
         yield return new WaitForSeconds(wait);
 
         //GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
@@ -789,30 +910,55 @@ public class SlideNumbering : MonoBehaviour
 
         for (int i = 0; i < beginning.Length; i++)
           {
+            int x = i + 1;
+
             wait = beginning[i].getTime();
             
             beginning[i].updatePlayScreen();
             beginning[i].playAudio();
-            yield return new WaitForSeconds(wait);
 
-            while (whichClip == 1)
+            if (saveFiles)
             {
-                if (System.IO.File.Exists("myfile"))
+                string framename;
+                if (System.IO.File.Exists(fileNum + "_" + participantName + "/begFrame_" + x + ".png")||doubleTroubleFrame==true)
                 {
-                    GetComponent<SavWav>().Save("myfile" + 1, beginning[i].getAudio() );
-                    whichClip = 2;
+                    framename = fileNum + "_" + participantName + "/begFrame2_" + x + ".png";
+                    doubleTroubleFrame = true;
                 }
                 else
                 {
-                    GetComponent<SavWav>().Save("myfile", beginning[i].getAudio());
-                    whichClip = 2;
+                    framename = fileNum + "_" + participantName + "/begFrame_" + x + ".png";
                 }
+                ScreenCapture.CaptureScreenshot(framename);
             }
 
+            
+            yield return new WaitForSeconds(wait);
 
+            if (saveFiles)
+            {
+                
+                    if (System.IO.File.Exists(fileNum + "_" + participantName +"/begAud_" + x)||doubleTroubleAud==true)
+                    {
+                        GetComponent<SavWav>().Save(fileNum + "_" + participantName + "/begAud2_" + x, beginning[i].getAudio());
+                    doubleTroubleAud = true;
+                        //whichClip = 2;
+                    }
+                    else
+                    {
+                        GetComponent<SavWav>().Save(fileNum + "_" + participantName + "/begAud_" + x, beginning[i].getAudio());
+                       // whichClip = 2;
+                    }
+                
+            }
+
+            fileNum += 1;
         }
 
-      
+        doubleTroubleFrame = false;
+        doubleTroubleAud = false;
+
+
 
         GameObject[] currents;
 
@@ -827,8 +973,17 @@ public class SlideNumbering : MonoBehaviour
         //GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(.596f, .824f, .894f, 1);
 
         GameObject.Find("PlayCharacter").GetComponent<Image>().color = new Color(1, 1, 1, 0);
-        GameObject.Find("PlayTitle").GetComponent<Text>().text = GameObject.FindGameObjectWithTag("mid_title").GetComponent<Text>().text;
+        GameObject.Find("PlayTitle").GetComponent<Text>().text = GameObject.Find("MidTitle").GetComponent<InputField>().text;
         GameObject.Find("PlayTitle").GetComponent<Text>().color = new Color(0, 0, 0, 1);
+
+        if (saveFiles)
+        {
+            if (System.IO.File.Exists(fileNum + "_" + participantName + "/midTitle.png"))
+            { ScreenCapture.CaptureScreenshot(fileNum + "_" + participantName + "/midTitle2.png"); }
+            else { ScreenCapture.CaptureScreenshot(fileNum + "_" + participantName + "/midTitle.png"); }
+                
+        }
+        fileNum += 1;
         yield return new WaitForSeconds(3.0f);
 
         GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
@@ -837,13 +992,53 @@ public class SlideNumbering : MonoBehaviour
 
         for (int i = 0; i < middle.Length; i++)
           {
+            int x = i + 1;
+
             wait = middle[i].getTime();
             
             middle[i].updatePlayScreen();
             middle[i].playAudio();
+
+            if (saveFiles)
+            {
+                string framename;
+                if (System.IO.File.Exists(fileNum + "_" + participantName + "/midFrame_" + x + ".png")||doubleTroubleFrame==true)
+                {
+                    framename = fileNum + "_" + participantName + "/midFrame2_" + x + ".png";
+                    doubleTroubleFrame = true;
+                }
+                else
+                {
+                    framename = fileNum + "_" + participantName + "/midFrame_" + x + ".png";
+                }
+                ScreenCapture.CaptureScreenshot(framename);
+            }
+
+
             yield return new WaitForSeconds(wait);
+
+            if (saveFiles)
+            {
+                
+                    if (System.IO.File.Exists(fileNum + "_" + participantName + "/midAud_" + x)||doubleTroubleAud==true)
+                    {
+                        GetComponent<SavWav>().Save(fileNum + "_" + participantName + "/midAud2_" + x, middle[i].getAudio());
+                    //whichClip = 2;
+                    doubleTroubleAud = true;
+                    }
+                    else
+                    {
+                        GetComponent<SavWav>().Save(fileNum + "_" + participantName + "/midAud_" + x, middle[i].getAudio());
+                        //whichClip = 2;
+                    }
+                
+            }
+
+            fileNum += 1;
         }
 
+        doubleTroubleFrame = false;
+        doubleTroubleAud = false;
 
         currents = GameObject.FindGameObjectsWithTag("current_item");
 
@@ -856,9 +1051,17 @@ public class SlideNumbering : MonoBehaviour
         //GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(.596f, .824f, .894f, 1);
 
         GameObject.Find("PlayCharacter").GetComponent<Image>().color = new Color(1, 1, 1, 0);
-        GameObject.Find("PlayTitle").GetComponent<Text>().text = GameObject.FindGameObjectWithTag("end_title").GetComponent<Text>().text;
+        GameObject.Find("PlayTitle").GetComponent<Text>().text = GameObject.Find("EndTitle").GetComponent<InputField>().text;
         GameObject.Find("PlayTitle").GetComponent<Text>().color = new Color(0, 0, 0, 1);
 
+        if (saveFiles)
+        {
+            if (System.IO.File.Exists(fileNum + "_" + participantName + "/endTitle.png"))
+            { ScreenCapture.CaptureScreenshot(fileNum + "_" + participantName + "/endTitle2.png"); }
+            else { ScreenCapture.CaptureScreenshot(fileNum + "_" + participantName + "/endTitle.png"); }
+
+        }
+        fileNum += 1;
         yield return new WaitForSeconds(3.0f);
 
         GameObject.Find("EnactmentBackdrop").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
@@ -867,11 +1070,48 @@ public class SlideNumbering : MonoBehaviour
 
         for (int i = 0; i < end.Length; i++)
           {
+            int x = i + 1;
+
             wait = end[i].getTime();
             
             end[i].updatePlayScreen();
             end[i].playAudio();
+
+            if (saveFiles)
+            {
+                string framename;
+                if (System.IO.File.Exists(fileNum + "_" + participantName + "/endFrame_" + x + ".png") || doubleTroubleFrame == true)
+                {
+                    framename = fileNum + "_" + participantName + "/endFrame2_" + x + ".png";
+                    doubleTroubleFrame = true;
+                }
+                else
+                {
+                    framename = fileNum + "_" + participantName + "/endFrame_" + x + ".png";
+                }
+                ScreenCapture.CaptureScreenshot(framename);
+            }
+            
+
             yield return new WaitForSeconds(wait);
+
+            if (saveFiles)
+            {
+                
+                    if (System.IO.File.Exists(fileNum + "_" + participantName + "/endAud_" + x)||doubleTroubleAud==true)
+                    {
+                        GetComponent<SavWav>().Save(fileNum + "_" + participantName + "/endAud2_" + x, end[i].getAudio());
+                    //whichClip = 2;
+                    doubleTroubleAud = true;
+                    }
+                    else
+                    {
+                        GetComponent<SavWav>().Save(fileNum + "_" + participantName + "/endAud_" + x, end[i].getAudio());
+                        //whichClip = 2;
+                    }
+                
+            }
+            fileNum += 1;
         }
 
 
@@ -890,6 +1130,14 @@ public class SlideNumbering : MonoBehaviour
         GameObject.Find("PlayTitle").GetComponent<Text>().text = "The End";
         GameObject.Find("PlayTitle").GetComponent<Text>().color = new Color(0, 0, 0, 1);
 
+        if (saveFiles)
+        {
+            if (System.IO.File.Exists(fileNum + "_" + participantName + "/theEnd.png"))
+            { ScreenCapture.CaptureScreenshot(fileNum + "_" + participantName + "/theEnd2.png"); }
+            else { ScreenCapture.CaptureScreenshot(fileNum + "_" + participantName + "/theEnd.png"); }
+
+        }
+        fileNum += 1;
         yield return new WaitForSeconds(3.0f);
 
 
@@ -910,7 +1158,13 @@ public class SlideNumbering : MonoBehaviour
         GameObject.Find("SaveStory").GetComponent<Image>().color = new Color(.235f, .788f, .4f, 1);
         GameObject.Find("SaveText").GetComponent<Text>().color = new Color(1, 1, 1, 1);
         GameObject.Find("SaveStory").GetComponent<Button>().interactable = true;
-    }
+
+        if (saveFiles)
+        {
+            GameObject.Find("CanvasManager").GetComponent<CanvasManagerBottomUp>().toEnd();
+        }
+
+        }
 
 
     /* public IEnumerator TestingCoRoutine()
@@ -925,7 +1179,13 @@ public class SlideNumbering : MonoBehaviour
     public void PlayThrough()
     {
         StopAllCoroutines();
-        StartCoroutine(SequenceTiming());
+        StartCoroutine(SequenceTiming(false));
+    }
+
+    public void SaveThrough()
+    {
+        StopAllCoroutines();
+        StartCoroutine(SequenceTiming(true));
     }
 
     private bool EmptySlide()
@@ -1046,6 +1306,122 @@ public class SlideNumbering : MonoBehaviour
     }
 
 
+    public void recordButton()
+    {
+        switch (condition)
+        {
+            case 0:
+                if (recordScreenReady)
+                {
+                    GameObject.FindGameObjectWithTag("all_canvases").GetComponent<CanvasManagerBottomUp>().toEnactment();
+                    updateEnactmentObjects();
+                    updateEnactmentPose();
+                }
+                else { GameObject.FindGameObjectWithTag("all_canvases").GetComponent<CanvasManagerBottomUp>().recordScenePop(); }
 
 
+                break;
+            case 2:
+                GameObject.FindGameObjectWithTag("all_canvases").GetComponent<CanvasManagerBottomUp>().toEnactment();
+                updateEnactmentObjects();
+                updateEnactmentPose();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void planningButton()
+    {
+        switch (condition)
+        {
+            case 0:
+               
+                break;
+            case 2:
+                if (planningReady)
+                {
+                    GameObject.FindGameObjectWithTag("all_canvases").GetComponent<CanvasManagerBottomUp>().planningPop();
+                }
+                else
+                {
+                    GameObject.FindGameObjectWithTag("all_canvases").GetComponent<CanvasManagerBottomUp>().planningIncompletePop();
+                }
+                
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    public int getCondition()
+    {
+        return condition;
+    }
+
+    public bool getAddReady()
+    {
+        return addReady;
+    }
+
+    public void setAddWhich(int w)
+    {
+        addWhich = w;
+    }
+
+    public void bottomAddSlide()
+    {
+        SlideArray[] children = GetComponentsInChildren<SlideArray>();
+
+        children[addWhich].addSlideAlone();
+
+        //for each slide unfilled (all previous slides), lock them
+
+        for (int i = 0; i < children.Length; i++)
+        {
+            SlideData[] grandchildrenData = children[i].GetComponentsInChildren<SlideData>();
+
+            for (int k = 0; k < grandchildrenData.Length; k++)
+            {
+                if (grandchildrenData[k].isFilled() == true)
+                {
+                    grandchildrenData[k].lockScene();
+                }
+
+            }
+        }
+
+    }
+
+    public int getTotal()
+    {
+        return slideTotalCount;
+    }
+
+    public void writeScene()
+    {
+        GameObject.Find("InputSlideText").GetComponent<InputField>().text = getSelectedData().getSceneInfo();
+        GameObject.FindGameObjectWithTag("all_canvases").GetComponent<CanvasManagerBottomUp>().slideInputPop();
+    }
+
+    public void finishWriteScene()
+    {
+        getSelectedData().setSceneInfo(GameObject.Find("InputSlideText").GetComponent<InputField>().text);
+        GameObject.FindGameObjectWithTag("all_canvases").GetComponent<CanvasManagerBottomUp>().slideInputHide();
+    }
+
+    public void toPlayScreenButton()
+    {
+        if (playReady)
+        {
+            GameObject.FindGameObjectWithTag("all_canvases").GetComponent<CanvasManagerBottomUp>().toPlay();
+            setTitle();
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("all_canvases").GetComponent<CanvasManagerBottomUp>().playStoryPop();
+
+        }
+    }
 }

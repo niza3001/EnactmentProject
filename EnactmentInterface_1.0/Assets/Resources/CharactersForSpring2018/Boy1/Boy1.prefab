@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4636277341929216}
   - component: {fileID: 114662750686179540}
   - component: {fileID: 114797287851154880}
-  - component: {fileID: 114909687578082910}
   m_Layer: 0
   m_Name: Boy1
   m_TagString: Untagged
@@ -71,21 +70,3 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e64109f5ac6ae764ab5de595a7f79812, type: 3}
   - {fileID: 21300000, guid: 004b49827e4f91044931a03d2cecbd0f, type: 3}
   - {fileID: 21300000, guid: 209f26fa0d6f95e43bf1417a8d91bf20, type: 3}
---- !u!114 &114909687578082910
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1747545782183232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 087c7d9ef34a28e4bae73f051a5a28ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poses:
-  - {fileID: 21300000, guid: a263a4c8d5732c244bc2158221a11271, type: 3}
-  - {fileID: 21300000, guid: c7e311a5882857146b04fdef0b93e8a6, type: 3}
-  - {fileID: 21300000, guid: e64109f5ac6ae764ab5de595a7f79812, type: 3}
-  - {fileID: 21300000, guid: 004b49827e4f91044931a03d2cecbd0f, type: 3}
-  - {fileID: 21300000, guid: 209f26fa0d6f95e43bf1417a8d91bf20, type: 3}
-  Test: 0
