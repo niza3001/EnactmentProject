@@ -27,6 +27,7 @@ public class SlideSelectSlide : MonoBehaviour, IPointerClickHandler, IBeginDragH
 
     public GameObject slideRecordIcon;
     public GameObject slideWriteIcon;
+    public GameObject slideLockIcon;
 
     private Sprite borderSprite;
     private string borderName;
@@ -88,6 +89,11 @@ public class SlideSelectSlide : MonoBehaviour, IPointerClickHandler, IBeginDragH
         newWriteIcon.transform.localPosition = new Vector3(25, -75, 0);
         newWriteIcon.GetComponent<Image>().color = new Color(1, 1, 1, 0);
 
+        GameObject newLockIcon = (GameObject)Instantiate(slideLockIcon, GetComponentInParent<Canvas>().transform);
+        newLockIcon.transform.SetParent(this.transform);
+        newLockIcon.transform.localPosition = new Vector3(75, 50, 0);
+        newLockIcon.GetComponent<Image>().color = new Color(1, 1, 1, 0);
+
         //the border prefab has no script, and is best found by its name, which varies by the tag
         switch (this.tag)
         {
@@ -119,7 +125,16 @@ public class SlideSelectSlide : MonoBehaviour, IPointerClickHandler, IBeginDragH
         {
             this.transform.Find("SlideWritten(Clone)").GetComponent<Image>().color = new Color(1, 1, 1, 1);
         }
-        
+
+        if (GetComponent<SlideData>().getLock() == false)
+        {
+            this.transform.Find("SlideLocked(Clone)").GetComponent<Image>().color = new Color(1, 1, 1, 0);
+        }
+        else
+        {
+            this.transform.Find("SlideLocked(Clone)").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        }
+
     }
 
     //assign new slide id - see SlideArray

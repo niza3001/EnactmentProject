@@ -54,6 +54,8 @@ MonoBehaviour:
     type: 2}
   slideWriteIcon: {fileID: 1018751244815074, guid: 77cabcc60f5a2df4486b9c42e13e9b42,
     type: 2}
+  slideLockIcon: {fileID: 1018751244815074, guid: f6d830f373f859d44a54200eae3c14dd,
+    type: 2}
 --- !u!114 &114208789694385930
 MonoBehaviour:
   m_ObjectHideFlags: 1

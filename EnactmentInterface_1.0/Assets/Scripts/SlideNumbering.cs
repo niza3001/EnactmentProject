@@ -21,7 +21,7 @@ public class SlideNumbering : MonoBehaviour
     private bool donePlanning = false;
     private bool ready = false;
 
-    private int condition = 0; //0-bottom up, 1-hybrid, 2-top down
+    private int condition = 2; //0-bottom up, 1-hybrid, 2-top down
     
     // Use this for initialization
 
@@ -200,7 +200,7 @@ public class SlideNumbering : MonoBehaviour
         SlideData[] begSlides = children[0].GetComponentsInChildren<SlideData>();
         SlideData[] midSlides = children[1].GetComponentsInChildren<SlideData>();
         SlideData[] endSlides = children[2].GetComponentsInChildren<SlideData>();
-        if (getSelectedStatus())
+        if (getSelectedStatus()&&!donePlanning)
         {
 
             if (getSelectedData().getLock())
@@ -275,7 +275,7 @@ public class SlideNumbering : MonoBehaviour
 
                 }
 
-                    if (getSelectedStatus())
+                    if (getSelectedStatus()&& !getSelectedData().getLock())
                     {
                         if (getSelectedData().isFilled())
                         {
@@ -1163,8 +1163,41 @@ public class SlideNumbering : MonoBehaviour
         {
             GameObject.Find("CanvasManager").GetComponent<CanvasManagerBottomUp>().toEnd();
         }
+        fileNum += 1;
+        if (saveFiles)
+        {
+            StreamWriter writer = new StreamWriter(fileNum + "_" + participantName + "/sceneNotes.text", true);
+            writer.WriteLine("SceneNotes: " + GameObject.FindGameObjectWithTag("main_title").GetComponent<Text>().text);
+            writer.WriteLine(" ");
+            writer.WriteLine(" ");
+            writer.WriteLine("Beginning Title: " + GameObject.Find("BegTitle").GetComponent<InputField>().text);
+            for (int i = 0; i < beginning.Length; i++)
+            {
+                writer.WriteLine("Beginning " + i + ": ");
 
+
+            }
+            writer.WriteLine(" ");
+            writer.WriteLine("Middle Title: " + GameObject.Find("MidTitle").GetComponent<InputField>().text);
+            for (int i = 0; i < middle.Length; i++)
+            {
+                writer.WriteLine("Middle " + i + ": ");
+
+
+            }
+            writer.WriteLine(" ");
+            writer.WriteLine("Ending Title: " + GameObject.Find("EndTitle").GetComponent<InputField>().text);
+            for (int i = 0; i < end.Length; i++)
+            {
+                writer.WriteLine("Ending " + i + ": ");
+
+
+            }
+            writer.WriteLine(" ");
+            writer.WriteLine("The End");
+            writer.Close();
         }
+    }
 
 
     /* public IEnumerator TestingCoRoutine()
